@@ -1,6 +1,4 @@
-$(document).ready(function() {
-    initMap()
-})
+$(document).ready(function() {})
 
 function loadProperty() {
     $('#main-container').empty()
@@ -134,7 +132,7 @@ function loadProperty() {
                                                         <div class="form-group row">
                                                             <label for="example-text-input" class="col-xs-2 col-form-label">Location</label>
                                                             <div class="col-xs-10">
-                                                                <div class="map-container"></div>
+                                                            <div id="map-container" class="col-md-6"></div>
                                                             </div>
                                                         </div>
 
@@ -257,14 +255,17 @@ function formPage() {
       <label for="example-text-input" class="col-xs-2 col-form-label">Location</label>
       <div id='map-container'></div>
       <div class="col-xs-10">
-          <input class="form-control" type="hidden" placeholder="Map" id="form-map">
+          <input class="form-control" type="hidden" name='lat' id="form-lat">
+          <input class="form-control" type="hidden" name='lng' id="form-lng">
       </div>
   </div>
 
-  <button type="button" class="btn btn-primary" onclick='createProperty()'>Create</button>
+  <button type="button" id='buttonCreateHouse' class="btn btn-primary" onclick='createProperty()'>Create</button>
   </div>
   `
     $('#main-container').append(html)
+    initMap()
+
 }
 
 function createProperty() {
@@ -272,7 +273,7 @@ function createProperty() {
     let $property_type = $('#form-type').val()
     let $address = $('#form-address').val()
     let $lat = $('#form-lat').val()
-    let $long = $('#form-long').val()
+    let $lng = $('#form-lng').val()
     let $details = $('#form-details').val()
     let $price = $('#form-price').val()
     let $image = $('#form-image').val()
@@ -289,7 +290,7 @@ function createProperty() {
             property_type: $property_type,
             address: $address,
             lat: $lat,
-            long: $long,
+            long: $lng,
             details: $details,
             price: $price,
             image: $image,
@@ -308,7 +309,6 @@ function createProperty() {
 }
 
 function editProperty(parameter) {
-    initMap()
     let updtitle = $(`#update-title${parameter}`).val()
     let updproperty_type = $(`#update-type${parameter}`).val()
     let updaddress = $(`#update-address${parameter}`).val()
@@ -386,6 +386,8 @@ function initMap() {
                     content: '<p>Marker</p>'
                 }
             });
+            $('#form-lat').val(e.latLng.lat())
+            $('#form-lng').val(e.latLng.lng())
         }
     })
     google.maps.event.addDomListener(window, 'load', initMap);
