@@ -6,9 +6,13 @@
   "title"       : String,
   "description" : String,
   "photo"       : String,
-  "marker"      : String,
-  "long"        : String,
-  "lat"         : String,
+  "location"    : {
+    "address"         : String,
+    "addressCountry"  : String,
+    "postalCode"      : String,
+    "long"            : String,
+    "lat"             : String,
+  },
   "createdAt"   : Date,
   "updatedAt"   : Date
 }

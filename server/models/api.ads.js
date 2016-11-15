@@ -7,7 +7,6 @@ let AdsSchema = new Schema({
   title : String,
   description : String,
   photo : String,
-  marker  : String,
   long  : String,
   lat : String,
 },{
