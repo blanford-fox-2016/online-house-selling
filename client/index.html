@@ -26,7 +26,7 @@
       </div>
     </nav>
 
-    <div class="container">
+    <div id="app" class="container">
       <div class="well well-sm">
         <form class="navbar-form navbar-left" role="search">
           <div class="form-group">
@@ -88,21 +88,114 @@
             <img src="http://www.likecool.com/Home/Building/Cool%20House/Cool-House.jpg" class="img-responsive" alt="" />
           </div>
           <div class="col-md-9">
-            <h3>Rumah Tamvan</h3>
+            <h3 class="h-title">Rumah Tamvan</h3>
+            <p class="text-muted">Posted On : November 15, 2016</p>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
             </p>
+            <a href="#" data-toggle="collapse" data-target="#detailHouse_" aria-expanded="false" aria-controls="detailHouse_">See More</a>
+            <div id="detailHouse_" class="collapse">
+              <p><strong>Price : </strong> Rp 190.000.000</p>
+              <p><strong>Owner : </strong> Mr. Tamvan</p>
+              <p><strong>Phone : </strong> 085695434151</p>
+              <p><strong>Address : </strong> Jalan Kenangan No. 09, Kecamatan Gagal Move On, Kota AukAh</p>
+            </div>
           </div>
         </div>
         <div class="panel-footer">
-          <button type="button" name="button" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i> Details</button>
-          <button type="button" name="button" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+          <div class="pull-right">
+            <button type="button" name="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#editHouse_"><i class="glyphicon glyphicon-edit"></i> Edit</button>
+            <button type="button" name="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteHouse_"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+          </div>
+          <div class="clearfix"></div>
         </div>
       </div>
+      <!-- SINGLE HOUSE -->
+
+      <!-- EDIT HOUSE -->
+      <div class="modal fade" id="editHouse_" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Edit House</h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label class="control-label" for="newtitle">Title</label>
+                <input class="form-control" id="newtitle" type="text" placeholder="Enter the title">
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="newdesc">Description</label>
+                <textarea class="form-control" id="newdesc" placeholder="Enter the description"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="newprice">Price</label>
+                <input class="form-control" id="newprice" type="number" placeholder="Enter the price">
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="newimage">Image</label>
+                <input class="form-control" id="newimage" type="text" placeholder="Enter the image">
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="newowner">Owner</label>
+                <input class="form-control" id="newowner" type="text" placeholder="Enter your name">
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="newphone">Phone</label>
+                <input class="form-control" id="newphone" type="text" placeholder="Enter your phone number">
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="newaddress">Address</label>
+                <textarea class="form-control" id="newaddress" placeholder="Enter the address"></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-info">Save changes <i class="glyphicon glyphicon-edit"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- EDIT HOUSE -->
+
+      <div class="modal fade" id="deleteHouse_" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Delete House</h4>
+            </div>
+            <div class="modal-body">
+              Are you sure want to delete this?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger">Save changes <i class="glyphicon glyphicon-trash"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
+    <script src="https://unpkg.com/vue@2.0.5/dist/vue.js" charset="utf-8"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+      var app = new Vue({
+        el: '#app',
+        data: {
+          houses: []
+        },
+        ready: function() {
 
+        },
+        methods: {
 
+        }
+
+      })
+    </script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa' crossorigin='anonymous'></script>
   </body>
