@@ -84,6 +84,17 @@ function updateAd(id){
       $('#modal_update .modal-body #btn_update').attr("onclick", `processUpdate('${selected_ad._id}')`)
     }
   })
+
+
+  $('#modal_update .modal-footer #close_modal').on('click', function(){
+    $('.modal-backdrop.fade.in').remove()
+  })
+}
+
+function processUpdate(id){
+  $.ajax({
+
+  })
 }
 
 function addNewAdd(){
@@ -121,6 +132,13 @@ function addNewAdd(){
         `
 
         $('#data_div').prepend(new_data_HTML)
+        $('#title').val('')
+        $('#description').val('')
+        $('#photo').val('')
+        $('#price').val('')
+        $('#address').val('')
+        $('#addressCountry').val('')
+        $('#postalCode').val('')
       }
     })
   })
