@@ -48,13 +48,15 @@ function showModal(id) {
     method: 'GET',
     success: function(selected_ad){
       console.log(selected_ad);
-      $('.modal-title').text(selected_ad.title)
-      $('.modal-body img').attr("src", `${selected_ad.photo}`)
-      $('.modal-body #price').text(`Price : ${selected_ad.price}`)
-      $('.modal-body #description').text(`Desc: ${selected_ad.description}`)
-      $('.modal-body #address').text(`Address: ${selected_ad.location.address}`)
-      $('.modal-body #addressCountry').text(`Country: ${selected_ad.location.addressCountry}`)
-      $('.modal-body #postalCode').text(`Postal Code: ${selected_ad.location.postalCode}`)
+      $('#modal_view .modal-title').text(selected_ad.title)
+      $('#modal_view .modal-body img').attr("src", `${selected_ad.photo}`)
+      $('#modal_view .modal-body #price').text(`Price : ${selected_ad.price}`)
+      $('#modal_view .modal-body #description').text(`Desc: ${selected_ad.description}`)
+      $('#modal_view .modal-body #address').text(`Address: ${selected_ad.location.address}`)
+      $('#modal_view .modal-body #addressCountry').text(`Country: ${selected_ad.location.addressCountry}`)
+      $('#modal_view .modal-body #postalCode').text(`Postal Code: ${selected_ad.location.postalCode}`)
+      $('#modal_view .modal-footer #update').attr("onclick", `updateAd('${selected_ad._id}')`)
+      $('#modal_view .modal-footer #delete').attr("onclick", `deleteAd('${selected_ad._id}')`)
     },
     error: function(err){
       console.log(err);
@@ -62,8 +64,30 @@ function showModal(id) {
   })
 }
 
+function updateAd(id){
+  $('#modal_view').hide()
+
+  $.ajax({
+    url: 'http://localhost:3000/api/ads/'+id,
+    method: 'GET',
+    success: function(selected_ad){
+      console.log(selected_ad);
+      $('#modal_update input#title').val(selected_ad.title)
+      $('#modal_update .modal-body #description').text(selected_ad.description)
+      $('#modal_update .modal-body #photo').val(selected_ad.photo)
+      $('#modal_update .modal-body #price').val(selected_ad.price)
+      $('#modal_update .modal-body #address').val(selected_ad.location.address)
+      $('#modal_update .modal-body #addressCountry').val(selected_ad.location.addressCountry
+      )
+      $('#modal_update .modal-body #postalCode').val(selected_ad.location.postalCode)
+
+      $('#modal_update .modal-body #btn_update').attr("onclick", `processUpdate('${selected_ad._id}')`)
+    }
+  })
+}
+
 function addNewAdd(){
-  $('#btn_add_add').on('click', function(e){
+  $('#btn_add').on('click', function(e){
     e.preventDefault()
     var input_data = {
       title: $('#title').val(),
