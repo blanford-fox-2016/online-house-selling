@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./src/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="./src/stylesheets/style.css">
+    <title>Cool Property</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="container">
+            <ul class="nav nav-pills" role="tablist">
+                <li role="presentation" id='panel-menu-home'><a href="#" onclick='loadProperty(event)'>Home</a></li>
+                <li role="presentation" id='panel-menu-form'><a href="#" onclick="formPage()">Create new Property</a></li>
+                <li role="presentation" id='panel-menu-search'><a>Search</a></li>
+            </ul>
+            <div class="jumbotron">
+                <img src="src/img/city-banner.jpg" class="img-responsive" alt="Responsive image">
+            </div>
+            <div class="page-header text-center">
+                <h1>Cool Property       <small>Find your desired cool property with a small step !</small> </h1>
+            </div>
+            <div class="container-fluid">
+                <div class='container'>
+                    <div id="main-container" class="row">
+
+
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./src/javascripts/jquery.min.js" charset="utf-8"></script>
+<script src="./src/javascripts/bootstrap.min.js" charset="utf-8"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMfgGfyByBQRnDHJosBhC0vjXdsy1fp2w">
+</script>
+<script src="src/javascripts/gmaps.js" charset="utf-8"></script>
+<script src="./src/javascripts/javascript.js" charset="utf-8"></script>
+
+
+</html>
