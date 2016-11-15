@@ -27,10 +27,10 @@ function loadProperty() {
                                 <p><strong>Facility: </strong></p>
                                 <p>${data[i].details}</p>
                                 <hr>
-                                <span><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                <span><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal${data[i].property_id}">
                                 View Detail
                                 </button></span>
-                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="myModal${data[i].property_id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -66,12 +66,12 @@ function loadProperty() {
 
                                             </div>
                                             <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editbutton">
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editbutton${data[i].property_id}">
                                               Edit  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                             </button>
 
                                             <!-- Modal -->
-                                            <div class="modal fade" id="editbutton" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="editbutton${data[i].property_id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">

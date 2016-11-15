@@ -53,7 +53,22 @@ module.exports = {
     updateProperty: function(req, res) {
         Property.findOneAndUpdate({
             property_id: req.params.id
-        }, req.body, { new: true }, function(err, data) {
+        }, {
+            title: req.body.title,
+            property_type: req.body.property_type,
+            location: {
+                address: req.body.address,
+                lat: req.body.lat,
+                long: req.body.long
+            },
+            details: req.body.details,
+            price: req.body.price,
+            contact: {
+                name: req.body.name,
+                phone: req.body.phone,
+                email: req.body.email
+            }
+        }, { new: true }, function(err, data) {
             if (err) {
                 console.log(err);
                 res.json({ message: `Error : ${err}` })
