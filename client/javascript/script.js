@@ -79,6 +79,8 @@ let showAll = () => {
             </div>
         `
       }
+
+      $('.house-collections').html()
       $('.house-collections').append(data)
     },
   });
