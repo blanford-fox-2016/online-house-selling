@@ -12,6 +12,7 @@
 9. bootstrap
 10. browser-sync
 11. gulp
+12. cors
 
 ## Development
 ### Client
