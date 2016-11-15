@@ -3,7 +3,9 @@ var houses = require('../models/model.house');
 module.exports = {
   // get one data house
   getOneDataHouse : function(req, res, next){
-    houses.find({ _id : req.body.id }, function(err, data){
+    console.log("masuk neh");
+    console.log(req.params.id);
+    houses.findOne({ _id : req.params.id }, function(err, data){
       if (err) throw err;
       res.json(data);
     })
