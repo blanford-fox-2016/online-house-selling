@@ -12,7 +12,7 @@ let generatingHouse = () => {
     title: $('#house-title').val(),
     image: $('#house-img').val(),
     price: $('#house-price').val(),
-    description: $('house-description').val()
+    description: $('#house-description').val()
   }
 
   console.log(houseData);
@@ -59,6 +59,8 @@ let showAll = () => {
             </div>
         `
       }
+
+      $('.house-collections').html()
       $('.house-collections').append(data)
     },
   });
