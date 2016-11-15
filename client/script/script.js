@@ -36,52 +36,30 @@ function showAllAds(){
           var id = $(this).attr('data-id')
           showModal(id)
         })
-        // tambahkan click listener pada button name=detail
-        // $(element button denga name).on('click', )
-        // munculkan modal dengan memanggil showModal, sambil mendapatkan attribute data-id
       }
     })
 }
 
-
-// gabungini ini
-
 function showModal(id) {
-  // console.log(id);
-  // dapatkan data-id dahulu
+  console.log(`test`);
+  console.log(id);
   $.ajax({
     url: 'http://localhost:3000/api/ads/'+id,
+    method: 'GET',
     success: function(selected_ad){
       console.log(selected_ad);
+      $('.modal-title').text(selected_ad.title)
+      $('.modal-body img').attr("src", `${selected_ad.photo}`)
+      $('.modal-body #price').text(`Price : ${selected_ad.price}`)
+      $('.modal-body #description').text(`Desc: ${selected_ad.description}`)
+      $('.modal-body #address').text(`Address: ${selected_ad.location.address}`)
+      $('.modal-body #addressCountry').text(`Country: ${selected_ad.location.addressCountry}`)
+      $('.modal-body #postalCode').text(`Postal Code: ${selected_ad.location.postalCode}`)
+    },
+    error: function(err){
+      console.log(err);
     }
   })
-  // lakukan get request sesuai data-id
-
-  // tamiplkan modal sesuai dengan data yang didapat sebeloumnay
-  var showModal = `
-  <!-- Modal -->
-  <div id="modal_view" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Sell your house now !</h4>
-        </div>
-
-        <div class="modal-body">
-        </div>
-
-        <div class="modal-footer">
-          <p>Copyright Sell Your House Now ! &copy; 2016</p>
-          <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-  <!-- end modal -->
-  `
 }
 
 function addNewAdd(){
