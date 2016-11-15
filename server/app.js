@@ -8,19 +8,13 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 const cors = require('cors')
 const session = require('express-session')
-const User = require('./models/user')
 const jwt = require('jsonwebtoken')
 
 const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 mongoose.connect(process.env.DATABASE)
 
-const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy
-
-// var routes = require('./routes/index');
-var users = require('./routes/users');
-var questions = require('./routes/question');
+var questions = require('./routes/house');
 
 var app = express();
 
@@ -35,29 +29,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors())
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  cookie: {
-    maxAge: 6000000
-  },
-  resave: false,
-  saveUninitialized: false
-}))
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-passport.use(new LocalStrategy(User.authenticate()))
-
-
-passport.serializeUser(User.serializeUser())
-passport.deserializeUser(User.deserializeUser())
-
-app.use('/api/user', users);
-app.use('/api/question', questions);
+app.use('/api/house', questions);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
