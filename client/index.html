@@ -85,7 +85,7 @@
       <div v-for="house in houses" v-bind:id="'house_'+house._id" class="panel panel-default">
         <div class="panel-body">
           <div class="col-md-3">
-            <img src="http://www.likecool.com/Home/Building/Cool%20House/Cool-House.jpg" class="img-responsive" alt="" />
+            <img v-bind:src="house.image" class="img-responsive" alt="" />
           </div>
           <div class="col-md-9">
             <h3 class="h-title">{{house.title}}</h3>
@@ -104,8 +104,8 @@
         </div>
         <div class="panel-footer">
           <div class="pull-right">
-            <button type="button" name="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#editHouse_"><i class="glyphicon glyphicon-edit"></i> Edit</button>
-            <button type="button" name="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteHouse_"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+            <button v-on:click.prevent="setmodeledit(house._id)" type="button" name="button" class="btn btn-sm btn-success" data-toggle="modal" v-bind:data-target="'#editHouse_'+house._id"><i class="glyphicon glyphicon-edit"></i> Edit</button>
+            <button type="button" name="button" class="btn btn-sm btn-danger" data-toggle="modal" v-bind:data-target="'#deleteHouse_'+house._id"><i class="glyphicon glyphicon-trash"></i> Delete</button>
           </div>
           <div class="clearfix"></div>
         </div>
@@ -113,7 +113,7 @@
       <!-- SINGLE HOUSE -->
 
       <!-- EDIT HOUSE -->
-      <div v-for="house in houses" class="modal fade" id="editHouse_" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div v-for="house in houses" class="modal fade" v-bind:id="'editHouse_'+house._id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -121,57 +121,63 @@
               <h4 class="modal-title" id="myModalLabel">Edit House</h4>
             </div>
             <div class="modal-body">
-              <div class="form-group">
-                <label class="control-label" for="newtitle">Title</label>
-                <input class="form-control" id="newtitle" type="text" placeholder="Enter the title">
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="newdesc">Description</label>
-                <textarea class="form-control" id="newdesc" placeholder="Enter the description"></textarea>
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="newprice">Price</label>
-                <input class="form-control" id="newprice" type="number" placeholder="Enter the price">
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="newimage">Image</label>
-                <input class="form-control" id="newimage" type="text" placeholder="Enter the image">
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="newowner">Owner</label>
-                <input class="form-control" id="newowner" type="text" placeholder="Enter your name">
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="newphone">Phone</label>
-                <input class="form-control" id="newphone" type="text" placeholder="Enter your phone number">
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="newaddress">Address</label>
-                <textarea class="form-control" id="newaddress" placeholder="Enter the address"></textarea>
-              </div>
+              <form id="editHouseForm">
+                <div class="form-group">
+                  <label class="control-label" for="edittitle">Title</label>
+                  <input class="form-control" v-model="edittitle" type="text" placeholder="Enter the title">
+                </div>
+                <div class="form-group">
+                  <label class="control-label" for="editdesc">Description</label>
+                  <textarea class="form-control" v-model="editdesc" placeholder="Enter the description"></textarea>
+                  <!-- <input class="form-control" v-model="editdesc" type="number" placeholder="Enter the description"> -->
+                </div>
+                <div class="form-group">
+                  <label class="control-label" for="editprice">Price</label>
+                  <input class="form-control" v-model="editprice" type="number" placeholder="Enter the price">
+                </div>
+                <div class="form-group">
+                  <label class="control-label" for="editimage">Image</label>
+                  <input class="form-control" v-model="editimage" type="text" placeholder="Enter the image">
+                </div>
+                <div class="form-group">
+                  <label class="control-label" for="editowner">Owner</label>
+                  <input class="form-control" v-model="editowner" type="text" placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                  <label class="control-label" for="editphone">Phone</label>
+                  <input class="form-control" v-model="editphone" type="text" placeholder="Enter your phone number">
+                </div>
+                <div class="form-group">
+                  <label class="control-label" for="editaddress">Address</label>
+                  <textarea class="form-control" v-model="editaddress" placeholder="Enter the address"></textarea>
+                  <!-- <input class="form-control" v-model="editaddress" type="text" placeholder="Enter your address" v-bind:value="house.address"> -->
+                </div>
+                <!-- <input type="hidden" name="id" v-model="editId" value="{{house._id}}"> -->
+
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-info">Save changes <i class="glyphicon glyphicon-edit"></i></button>
+              <button type="button" class="btn btn-info" v-on:click.prevent="updateHouse(house._id)" data-dismiss="modal">Save changes <i class="glyphicon glyphicon-edit"></i></button>
             </div>
+            </form>
           </div>
         </div>
       </div>
       <!-- EDIT HOUSE -->
 
-      <div v-for="house in houses" class="modal fade" id="deleteHouse_" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div v-for="house in houses" class="modal fade" v-bind:id="'deleteHouse_'+house._id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title" id="myModalLabel">Delete House</h4>
+              <h4 class="modal-title" id="myModalLabel">Delete House {{house.title}}</h4>
             </div>
             <div class="modal-body">
-              Are you sure want to delete this?
+              Are you sure want to delete this house?
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-danger">Save changes <i class="glyphicon glyphicon-trash"></i></button>
+              <button type="button" class="btn btn-danger"  v-on:click.prevent="deleteHouse(house._id)">Save changes <i class="glyphicon glyphicon-trash"></i></button>
             </div>
           </div>
         </div>
@@ -194,14 +200,33 @@
           newimage: '',
           newowner: '',
           newphone: '',
-          newaddress: ''
+          newaddress: '',
+
+          // DATA INPUT FOR EDIT HOUSE
+          edittitle: '',
+          editdesc: '',
+          editprice: '',
+          editimage: '',
+          editowner: '',
+          editphone: '',
+          editaddress: ''
         },
         ready: function() {
           console.log('Ready');
           this.getAllHouses();
         },
         methods: {
-
+          resetForm: function(e) {
+            console.log('Ini resetForm');
+            e.preventDefault()
+            this.$data.newtitle = ""
+            this.$data.newdesc = ""
+            this.$data.newprice = ""
+            this.$data.newimage = ""
+            this.$data.newowner = ""
+            this.$data.newphone = ""
+            this.$data.newaddress = ""
+          },
           // retrieve all houses from api
           getAllHouses: function()
           {
@@ -228,9 +253,56 @@
             .then(function(response){
               app.houses.push(response.data);
               console.log(response.data);
+              // app.resetForm();
+              document.getElementById("addNewHouseForm").submit();
             })
             .catch(function (error) {
-              console.log(err);
+              console.log(error);
+            })
+          },
+          setmodeledit: function(id) {
+            axios.get('http://localhost:3000/api/house/'+id, {})
+            .then(function(response){
+              console.log(response);
+              app.edittitle = response.data.title,
+              app.editdesc = response.data.description,
+              app.editprice = response.data.price,
+              app.editimage = response.data.image,
+              app.editowner = response.data.owner,
+              app.editphone = response.data.phone,
+              app.editaddress = response.data.address
+            })
+            .catch(function(error) {
+              console.log(error);
+            })
+          },
+          updateHouse: function(id) {
+            axios.put('http://localhost:3000/api/house/'+id, {
+              _id: id,
+              title: app.edittitle,
+              description: app.editdesc,
+              price: app.editprice,
+              image: app.editimage,
+              owner: app.editowner,
+              phone: app.editphone,
+              address: app.editaddress
+            })
+            .then(function(response){
+              console.log(response.data);
+              app.getAllHouses()
+            })
+            .catch(function (error) {
+              console.log(error);
+            })
+          },
+          deleteHouse: function(id) {
+            axios.delete('http://localhost:3000/api/house/'+id, {})
+            .then(function(response){
+              console.log(response.data);
+              app.getAllHouses()
+            })
+            .catch(function (error) {
+              console.log(error);
             })
           }
         }

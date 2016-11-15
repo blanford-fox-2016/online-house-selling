@@ -14,7 +14,7 @@ const app = express();
 
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://127.0.0.1/tanyasaja', (err) => {
+mongoose.connect('mongodb://127.0.0.1/rumahtamvan', (err) => {
   if (err) {
     console.log(err);
   } else {
