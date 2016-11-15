@@ -11,13 +11,14 @@ let propertySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    type: {
+    property_type: {
         type: String,
         required: true
     },
     location: {
-        type: String,
-        required: true
+        address: String,
+        lat: Number,
+        long: Number
     },
     details: {
         type: String
@@ -27,10 +28,10 @@ let propertySchema = new mongoose.Schema({
         required: true
     },
     contact: {
-        type: Array,
-        required: true
+        name: String,
+        phone: String,
+        email: String
     }
-
 });
 
 
