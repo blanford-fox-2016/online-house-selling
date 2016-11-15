@@ -26,7 +26,44 @@
       </div>
     </nav>
 
+    <!-- Half Page Image Background Carousel Header -->
+    <header id="myCarousel" class="carousel slide">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+        </ol>
+
+        <!-- Wrapper for Slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <!-- Set the second background image using inline CSS below. -->
+                <div class="fill" style="background-image:url('https://static.pexels.com/photos/2818/house-car-vintage-old.jpg');"></div>
+                <div class="carousel-caption">
+                    <h1>Get your dream house, right now!</h1>
+                </div>
+            </div>
+            <div class="item">
+                <!-- Set the third background image using inline CSS below. -->
+                <div class="fill" style="background-image:url('https://images.pexels.com/photos/24238/pexels-photo-24238.jpg');"></div>
+                <div class="carousel-caption">
+                    <h1>Need to sell your house? You're on the right place</h1>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="icon-prev"></span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="icon-next"></span>
+        </a>
+
+    </header>
+    <br>
     <div id="app" class="container">
+
       <div class="well well-sm">
         <!-- <form class="navbar-form navbar-left" role="search">
           <div class="form-group">
@@ -95,8 +132,8 @@
             <p>
               {{house.description}}
             </p>
-            <a href="#" data-toggle="collapse" data-target="#detailHouse_" aria-expanded="false" aria-controls="detailHouse_">See More</a>
-            <div id="detailHouse_" class="collapse">
+            <a data-toggle="collapse" v-bind:data-target="'#detailHouse_'+house._id" aria-expanded="false" v-bind:aria-controls="'detailHouse_'+house._id">See More</a>
+            <div v-bind:id="'detailHouse_'+house._id" class="collapse">
               <p><strong>Price : </strong> Rp {{house.price}}</p>
               <p><strong>Owner : </strong> {{house.owner}}</p>
               <p><strong>Phone : </strong> {{house.phone}}</p>
@@ -158,8 +195,8 @@
 
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-info" v-on:click.prevent="updateHouse(house._id)" data-dismiss="modal">Save changes <i class="glyphicon glyphicon-edit"></i></button>
+              <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-sm btn-info" v-on:click.prevent="updateHouse(house._id)" data-dismiss="modal">Save changes <i class="glyphicon glyphicon-edit"></i></button>
             </div>
             </form>
           </div>
@@ -178,8 +215,8 @@
               Are you sure want to delete this house?
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-danger"  v-on:click.prevent="deleteHouse(house._id)">Save changes <i class="glyphicon glyphicon-trash"></i></button>
+              <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-sm btn-danger"  v-on:click.prevent="deleteHouse(house._id)">Save changes <i class="glyphicon glyphicon-trash"></i></button>
             </div>
           </div>
         </div>
