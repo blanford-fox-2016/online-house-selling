@@ -6,13 +6,13 @@ const Increment = require('mongoose-sequence')
 
 const houseSchema = new Schema({
   house_id: {type: Number},
-  title: {type: String, required: true},
-  description: {type: String, required: true},
-  image: {type: String, required: true},
-  price: {type: Number, required: true},
+  title: {type: String},
+  description: {type: String},
+  image: {type: String},
+  price: {type: Number},
   location: {
-    lat: {type: String, required: true},
-    long: {type: String, required: true}
+    lat: {type: String},
+    long: {type: String}
   }
 });
 
