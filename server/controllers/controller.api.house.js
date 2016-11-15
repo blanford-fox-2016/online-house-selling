@@ -6,12 +6,27 @@ module.exports = {
         const dataHouse = [
             {
                 title: 'title a',
-                address: 'address a',
                 price: 1000,
-                long: '1212',
-                lat: '22222',
+                'location.address': 'address a',
+                'location.long': '345',
+                'location.lat': '123',
                 photoPath: 'path a',
-                email: 'admin@gmail.com',
+            },
+            {
+                title: 'title b',
+                price: 1000,
+                'location.address': 'address b',
+                'location.long': '345',
+                'location.lat': '123',
+                photoPath: 'path b',
+            },
+            {
+                title: 'title c',
+                price: 1000,
+                'location.address': 'address c',
+                'location.long': '345',
+                'location.lat': '123',
+                photoPath: 'path c',
             }
         ]
 
@@ -40,11 +55,11 @@ module.exports = {
     createHouse: function (req, res) {
         const house = {
             title: req.body.title,
-            address: req.body.address,
             price: req.body.price,
-            long: "",
-            lat: "",
-            photoPath: "",
+            'location.address': req.body.address,
+            'location.long': '',
+            'location.lat': '',
+            photoPath: '',
         }
 
         // console.log(question)
@@ -72,11 +87,12 @@ module.exports = {
     },
 
     updateHouse: function (req, res) {
+
         House.findOneAndUpdate({
             _id: req.params.houseId
         }, {
             title: req.body.title,
-            address: req.body.address,
+            'location.address': req.body.address,
             price: req.body.price,
         }, {
             new: true,

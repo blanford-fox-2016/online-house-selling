@@ -30,18 +30,21 @@ const House = new Schema({
         type: String,
         required: true
     },
-    address: {
-        type: String,
-        required: true
+    location: {
+        address: {
+            type: String,
+            required: true
+        }
+        long: {
+            type: String,
+            required: true
+        },
+        lat: {
+            type: String,
+            required: true
+        }
+    
     },
-    long: {
-        type: String,
-        required: true
-    },
-    lat: {
-        type: String,
-        required: true
-    }
     photoPath: {
         type: String,
         required: true,
