@@ -6,6 +6,7 @@
   "title"       : String,
   "description" : String,
   "photo"       : String,
+  "price"       : Number,
   "location"    : {
     "address"         : String,
     "addressCountry"  : String,
