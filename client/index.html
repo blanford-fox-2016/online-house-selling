@@ -12,35 +12,28 @@
 
 <body>
     <div class="container-fluid">
-        <ul class="nav nav-tabs">
-            <li role="button" id='todopanel' class="" ><a href="#">Todo list</a></li>
-        </ul>
-        <div class="page-header text-center">
-            <h1>Cool Todo       <small>Populated by AJAX</small> </h1>
-        </div>
-        <div class="container-fluid">
-            <div id="main-container" class='container'>
-                <form class="form-inline" action='http://localhost:3000/api/todo' method='post'>
-                    <div class="form-group">
-                        <label for="exampleInputName2">New Todo</label>
-                        <input type="text" class="form-control" placeholder="Add new To-do" name='todo'>
-                    </div>
-                    <button type="submit" class="btn btn-default">Create Todo</button>
-                </form>
-
+        <div class="container">
+            <ul class="nav nav-pills" role="tablist">
+                <li role="presentation" class="active"><a href="#">Home</a></li>
+                <li role="presentation"><a href="#">Create new Property</a></li>
+                <li role="presentation"><a href="#">Search</a></li>
+            </ul>
+            <div class="jumbotron">
+              <img src="src/img/city-banner.jpg" class="img-responsive" alt="Responsive image">  
             </div>
+            <div class="page-header text-center">
+                <h1>Cool Property       <small>Find your desired property with a small step !</small> </h1>
+            </div>
+            <div class="container-fluid">
+                <div id="main-container" class='container'>
 
-
+                </div>
+            </div>
         </div>
-
-
-
     </div>
 </body>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="./src/javascripts/jquery.min.js" charset="utf-8"></script>
 <script src="./src/javascripts/bootstrap.min.js" charset="utf-8"></script>
-<script src="./src/javascripts/vue.js" charset="utf-8"></script>
 <script src="./src/javascripts/javascript.js" charset="utf-8"></script>
 
 
