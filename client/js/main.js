@@ -46,10 +46,18 @@ var app = new Vue({
         // console.log(mapdiv);
         setTimeout(function(){
           console.log(mapdiv);
-          new GMaps({
+          var map = new GMaps({
             div: mapdiv,
             lat: -12.043333,
             lng: -77.028333
+          });
+          map.addMarker({
+            lat: -12.043333,
+            lng: -77.028333,
+            title: 'Lima',
+            click: function(e) {
+              alert('You clicked in this marker');
+            }
           });
         }, 1000)
 
