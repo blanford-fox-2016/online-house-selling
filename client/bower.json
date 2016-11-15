@@ -1,0 +1,20 @@
+{
+  "name": "client",
+  "homepage": "https://github.com/blanford-fox-2016/online-house-selling",
+  "authors": [
+    "broerjuang <juangwiantoro@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}
