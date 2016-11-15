@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Online House</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+</head>
+<body>
+
+  <!-- navbar
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#headerApps">Online House</a>
+      </div>
+      <div class="row">
+        <div class="five columns">
+          <ul class="nav navbar-nav">
+              <p>
+
+              </p>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+              <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Online House</h4>
+                  </div>
+                  <div class="modal-body">
+
+                    <!-- form -->
+                    <form class="form">
+                      <div class="form-group">
+                        <label class="sr-only" for="name">House type:</label>
+                        <input type="name" class="form-control" id="name" placeholder="Enter house type">
+                      </div>
+                      <div class="form-group">
+                        <label class="sr-only" for="area">House area:</label>
+                        <input type="area" class="form-control" id="area" placeholder="Enter house area">
+                      </div>
+                      <div class="form-group">
+                        <label class="sr-only" for="url">House image url:</label>
+                        <input type="name" class="form-control" id="image" placeholder="Enter house image">
+                      </div>
+                      <div class="form-group">
+                        <label class="sr-only" for="price">House price:</label>
+                        <input type="price" class="form-control" id="price" placeholder="Enter house price">
+                      </div>
+
+                    </form>
+                    <div style="width:20%">
+                      <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+                      <div id="map" ></div>
+                    </div>
+                      <button type="submit" class="btn btn-default" onclick="inputData()">Submit</button>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </ul>
+        </div>
+        <div class="five columns">
+          <div class="form">
+            <form class="navbar-form" role="search" id="searchingForm">
+      					<div class="input-group">
+      						<input type="text" class="form-control pull-right" style="width: 300px; margin-right: 5px, border: 1px solid black; background-color: #e5e5e5;" placeholder="Search" id="search">
+      						<span class="input-group-btn">
+      							<button type="reset" class="btn btn-default">
+      								<span class="glyphicon glyphicon-remove">
+      									<span class="sr-only">Close</span>
+      								</span>
+      							</button>
+      							<button type="submit" class="btn btn-default">
+      								<span class="glyphicon glyphicon-search">
+      									<span class="sr-only">Search</span>
+      								</span>
+      							</button>
+      						</span>
+      					</div>
+      			</form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <button data-toggle="modal" data-target="#houselist" style="margin-top:15px">House list</button> -->
+    <button data-toggle="modal" data-target="#myModal" style="margin-top:15px">Post your house</button>
+  </nav>
+
+
+<!-- End
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+<!--  banner
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+
+  <div id="showHouse" style="text-align:center">
+  </div>
+  <div id="detaildetail">
+  </div>
+<!-- created form photo -->
+
+</body>
+<script type="text/javascript">
+$(document).ready(function(){
+
+        loadData()
+        detailId()
+      })
+
+function loadData(){
+
+        $.ajax({
+          url         : "http://localhost:3000/api/house",
+          method      : 'get',
+          data        : {},
+          success     : function (data){
+            console.log(data);
+               var html = "";
+               for(var i = 0; i < data.length; i++){
+                 html+=`
+                   <img src="${data[i].image}" alt="${data[i].name}" width="460" height="345" >
+                   <button data-toggle="modal" data-target="#${data[i]._id}" style="margin-top:15px">detail list</button>
+                 `
+               }
+              $("#showHouse").prepend(html)
+        }
+   })
+
+ }
+
+ function inputData(){
+       Data = {
+         name : $('#name').val(),
+         area  :$('#area').val(),
+         price: $('#price').val(),
+         image :$('#image').val(),
+         location : $('#pac-input').val()
+      }
+
+      createAds(Data);//send data to create
+
+  }
+
+
+  function detailId (){
+    $.ajax({
+      url         : "http://localhost:3000/api/house",
+      method      : 'get',
+      data        : {},
+      success     : function (data){
+        console.log(data);
+           var html = "";
+           for(var i = 0; i < data.length; i++){
+             html+=`
+             <div class="modal fade" id="${data[i]._id}" role="dialog">
+               <div class="modal-dialog">
+                 <!-- Modal content-->
+                 <div class="modal-content">
+                   <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal">&times;</button>
+                     <h4 class="modal-title">House detail</h4>
+
+                   </div>
+                   <div class="modal-body">
+                     <div class="container" >
+                     <h2>House type : ${data[i].name}</h2>
+                     <h2>Area  :${data[i].area}</h2>
+                     <h2>Price: ${data[i].price}</h2>
+                     <h2>Location : ${data[i].location}</h2>
+                     </h2>
+                     </div>
+                   </div>
+
+                 </div>
+
+               </div>
+
+             </div>
+             `
+           }
+          $("#detaildetail").prepend(html)
+        }
+    })
+  }
+
+
+  function dataDetail(id){
+    alert("masok")
+    $.ajax({
+      url         : "http://localhost:3000/api/house/"+id,
+      method      : 'get',
+      contentType : 'application/x-www-form-urlencoded',
+      data        : {'id':id},
+      success     : function(data) {
+        `
+          <h2>
+          name : ${data.name},
+          area  :${data.area},
+          price: ${data.price},
+          location : ${data.location}
+          </h2>`
+        alert(`${data.name} upload, success`)
+        $("#newHouse").prepend(html)
+      }
+    })
+  }
+
+  function createAds(Data){
+    $.ajax({
+      url         : "http://localhost:3000/api/house",
+      method      : 'post',
+      contentType : 'application/x-www-form-urlencoded',
+      data        : Data,
+      success     : function (data){
+        var html = "";
+        html+=`
+          <a href="${data._id}"><img src="${data.image}" alt="${data.name}" width="460" height="345"></a>`
+        alert(`${data.name} upload, success`)
+        $("#newHouse").prepend(html)
+
+      }
+    })
+  }
+
+  function initAutocomplete() {
+     var map = new google.maps.Map(document.getElementById('map'), {
+       center: {lat: -33.8688, lng: 151.2195},
+       zoom: 13,
+       mapTypeId: 'roadmap'
+     });
+
+     // Create the search box and link it to the UI element.
+     var input = document.getElementById('pac-input');
+     var searchBox = new google.maps.places.SearchBox(input);
+     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+     // Bias the SearchBox results towards current map's viewport.
+     map.addListener('bounds_changed', function() {
+       searchBox.setBounds(map.getBounds());
+     });
+
+     var markers = [];
+     // Listen for the event fired when the user selects a prediction and retrieve
+     // more details for that place.
+     searchBox.addListener('places_changed', function() {
+       var places = searchBox.getPlaces();
+
+       if (places.length == 0) {
+         return;
+       }
+
+       // Clear out the old markers.
+       markers.forEach(function(marker) {
+         marker.setMap(null);
+       });
+       markers = [];
+
+       // For each place, get the icon, name and location.
+       var bounds = new google.maps.LatLngBounds();
+       places.forEach(function(place) {
+         if (!place.geometry) {
+           console.log("Returned place contains no geometry");
+           return;
+         }
+         var icon = {
+           url: place.icon,
+           size: new google.maps.Size(71, 71),
+           origin: new google.maps.Point(0, 0),
+           anchor: new google.maps.Point(17, 34),
+           scaledSize: new google.maps.Size(25, 25)
+         };
+
+         // Create a marker for each place.
+         markers.push(new google.maps.Marker({
+           map: map,
+           icon: icon,
+           title: place.name,
+           position: place.geometry.location
+         }));
+
+         if (place.geometry.viewport) {
+           // Only geocodes have viewport.
+           bounds.union(place.geometry.viewport);
+         } else {
+           bounds.extend(place.geometry.location);
+         }
+       });
+       map.fitBounds(bounds);
+     });
+   }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4YpbgNWUryX6DK1mfObIvx1cZjarsLHc&libraries=places&callback=initAutocomplete"
+       async defer></script>
+</body>
+<!--template list-------------------------------------------------------------------------------------------------------------->
+<!-- image -->
+<!-- <div class="item active">
+  <a href=""><img src="http://www.smallworks.ca/wp-content/uploads/exterior11.jpg" alt="small-house" width="200" height="200"></a>
+</div>
+
+
+
+<div class="item">
+  <img src="http://m.drummondhouseplans.com/fileadmin/_entemp_/L051104135130.jpg" alt="Flower" width="200" height="200">
+</div>
+
+<div class="item">
+  <img src="https://s-media-cache-ak0.pinimg.com/564x/85/64/97/8564973174a156f8fafb7e4eee07d0a5.jpg" alt="Flower" width="200" height="200">
+</div> -->
+<!-- image -------------------------------------------------------------------------------------------------------------------------------->
+</html>
