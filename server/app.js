@@ -6,6 +6,7 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
+const cors = require('cors');
 const routes = require('./routes/index');
 const apiHouse = require('./routes/apiHouse');
 
@@ -23,6 +24,8 @@ mongoose.connect('mongodb://127.0.0.1/tanyasaja', (err) => {
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
+app.use(cors())
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
