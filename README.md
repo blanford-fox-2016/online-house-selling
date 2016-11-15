@@ -1,5 +1,19 @@
 # online-house-selling
 
+## Model's Structure
+```json
+{
+  "title"       : String,
+  "description" : String,
+  "photo"       : String,
+  "marker"      : String,
+  "long"        : String,
+  "lat"         : String,
+  "createdAt"   : Date,
+  "updatedAt"   : Date
+}
+```
+
 ## Dependencies
 1. nodemon
 2. express generator
