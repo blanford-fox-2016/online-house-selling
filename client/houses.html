@@ -3,7 +3,7 @@
 
 <head>
     <title>Online House Selling</title>
-    <meta name="viewport" content="initial-scale=1.0">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <link rel="stylesheet" href="./libraries/bootstrap.min.css">
     <link rel="stylesheet" href="./css/style.css">
@@ -59,10 +59,11 @@
                                         <input class="form-control" name="rooms" type="text">
                                     </div>
                                     <div class="col-md-12" style="margin-bottom: 5px">
-                                        <input class="form-control" name="address" type="text">
+                                        <input class="form-control" name="image" type="text">
                                     </div>
                                     <div class="col-md-12" style="margin-bottom: 5px">
-                                        <input class="form-control" name="image" type="text">
+                                        <input id="pac-input-2" class="controls form-control" name="address" type="text" placeholder="Search Address">
+                                        <div id="map-2"></div>
                                     </div>
                                     <div class="col-md-12">
                                         <button type="submit" id="process-edit-house" onclick="processEditData(this,event)" class="btn btn-default btn-block">Edit House</button>
@@ -91,17 +92,14 @@
                                         <input class="form-control" name="rooms" type="text" placeholder="Enter rooms">
                                     </div>
                                     <div class="col-md-12" style="margin-bottom: 5px">
-                                        <input class="form-control" name="address" type="text" placeholder="Enter address">
-                                    </div>
-                                    <div class="col-md-12" style="margin-bottom: 5px">
                                         <input class="form-control" name="image" type="text" placeholder="Enter image URL">
                                     </div>
                                     <div class="col-md-12" style="margin-bottom: 5px">
-                                        <div id="map">
-                                        </div>
+                                        <input id="pac-input" class="controls form-control" name="address" type="text" placeholder="Search Address">
+                                        <div id="map"></div>
                                     </div>
                                     <div class="col-md-12">
-                                        <button type="submit" class="btn btn-default btn-block"><span class="fa fa-plus"></span> Add House</button>
+                                        <button type="submit" class="btn btn-lg btn-default btn-block"><span class="fa fa-plus"></span> Add House</button>
                                     </div>
                                 </form>
                             </div>
@@ -119,6 +117,6 @@
 <script type="text/javascript" src="./javascripts/script.houses.js"></script>
 <!-- google maps stuff -->
 <script type="text/javascript" src="./javascripts/script.google-map.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzFl4SUB_PmLP9SQ0tWEjXhNbQQNW1w0I&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzFl4SUB_PmLP9SQ0tWEjXhNbQQNW1w0I&libraries=places&callback=initAutocomplete" async defer></script>
 
 </html>

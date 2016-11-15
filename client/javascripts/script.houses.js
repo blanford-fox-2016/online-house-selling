@@ -8,16 +8,16 @@ function getAllDatas() {
             $('#house-list').empty()
             for (let j in datas) {
                 $('#house-list').append('\
-					<div data-id="' + datas[j]._id + '" class="col-md-3 col-sm-4 col-xs-6" style="padding: 15px;">\
-		                <div class="circle-avatar house-image" style="background-image:url(' + datas[j].image + ')"></div>\
-		                <h3 class="house-name">' + datas[j].name + '</h3>\
-		                <p class="house-price">Rp.' + datas[j].price + '</p>\
-		                <p class="house-rooms">' + datas[j].rooms + ' rooms</p>\
-                        <p class="house-address">' + datas[j].address + '</p>\
-		                <button type="submit" class="btn btn-sm btn-default" data-toggle="modal" data-target="#myModal" data-id="' + datas[j]._id + '" onclick="showEditData(this)"><span class="fa fa-pencil"></span></button>\
-		                <button type="submit" class="btn btn-sm btn-default" data-id="' + datas[j]._id + '" onclick="deleteData(this)"><span class="fa fa-trash"></span></button>\
-		            </div>\
-				')
+                    <div data-id="' + datas[j]._id + '" class="col-md-3 col-sm-4 col-xs-6" style="padding: 15px;">\
+                        <div class="circle-avatar house-image" style="background-image:url(' + datas[j].image + ')"></div>\
+                        <h3 class="house-name text-capitalize">' + datas[j].name + '</h3>\
+                        <p class="house-price">Rp. ' + addcommas(datas[j].price) + '</p>\
+                        <h5 class="house-rooms">' + datas[j].rooms + ' rooms</h5>\
+                        <h5 class="house-address">' + datas[j].address + '</h5>\
+                        <button type="submit" class="btn btn-sm btn-default" data-toggle="modal" data-target="#myModal" data-id="' + datas[j]._id + '" onclick="showEditData(this)"><span class="fa fa-pencil"></span></button>\
+                        <button type="submit" class="btn btn-sm btn-default" data-id="' + datas[j]._id + '" onclick="deleteData(this)"><span class="fa fa-trash"></span></button>\
+                    </div>\
+                ')
             }
         }
     })
@@ -47,10 +47,10 @@ function addData() {
                 getAllDatas()
                 $('#alert-message').empty()
                 $('#alert-message').append('\
-					<div class="alert alert-success">\
-                		Data is added.\
-            		</div>\
-        		')
+                    <div class="alert alert-success">\
+                        Data is added.\
+                    </div>\
+                ')
                 window.scrollTo(0, 0);
             })
 
@@ -70,13 +70,15 @@ function deleteData(pointer) {
             getAllDatas()
             $('#alert-message').empty()
             $('#alert-message').append('\
-			<div class="alert alert-danger">\
+            <div class="alert alert-danger">\
                 Data is deleted.\
             </div>\
         ')
             window.scrollTo(0, 0);
         })
 }
+
+var initFlagMap2 = false
 
 //show edit data form
 function showEditData(pointer) {
@@ -96,11 +98,18 @@ function showEditData(pointer) {
             $("#edit-house-form input[name=image]").attr('value', data.image)
             $("#process-edit-house").attr('data-id', data._id)
         })
+
+    setTimeout(function(){
+        if(!initFlagMap2){
+            initFlagMap2 = true
+            mapOnEdit()    
+        }
+    }, 1000)
 }
 
 //edit data
-function processEditData(pointer,e) {
-	e.preventDefault()
+function processEditData(pointer, e) {
+    e.preventDefault()
     var id = $(pointer).attr('data-id')
 
     var data = {
@@ -125,15 +134,35 @@ function processEditData(pointer,e) {
             getAllDatas()
             $('#alert-message').empty()
             $('#alert-message').append('\
-					<div class="alert alert-warning">\
-                		Data is edited.\
-            		</div>\
-        		')
+                    <div class="alert alert-warning">\
+                        Data is edited.\
+                    </div>\
+                ')
             window.scrollTo(0, 0);
         })
 }
 
+function disableEnter() {
+    $("#add-house-form").bind("keypress", function(e) {
+        if (e.keyCode == 13) {
+            return false;
+        }
+    })
+
+    $("#edit-house-form").bind("keypress", function(e) {
+        if (e.keyCode == 13) {
+            return false;
+        }
+    })
+}
+
+function addcommas(input){
+    var text = input.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")
+    return text
+  }
+
 $(function() {
     getAllDatas()
     addData()
+    disableEnter()
 })
