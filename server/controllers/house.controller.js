@@ -13,22 +13,11 @@ module.exports = {
   },
 
   generate(req, res) {
-    console.log(req.body)
-    // let houseData = {
-    //   title: req.body.title,
-    //   description: req.body.description,
-    //   image: req.body.image,
-    //   price: req.body.price,
-    //   location: req.body.location
-    // }
-
-    // asking mongoose to create hose for us
     House
       .create(req.body)
       .then((house) => {
-        console.log(house)
-        res.json(house)
-      })
+        console.log(house);
+        res.json(house)})
       .catch((err) => res.json(err))
   },
 

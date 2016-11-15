@@ -12,17 +12,38 @@ let generatingHouse = () => {
     title: $('#house-title').val(),
     image: $('#house-img').val(),
     price: $('#house-price').val(),
-    description: $('house-description').val()
+    description: $('#house-description').val()
   }
-
-  console.log(houseData);
 
   $.ajax({
     type: "POST",
     url: 'http://localhost:3000/api/houses',
     data: houseData,
     success: function(house) {
-      alert("House has been posted")
+      console.log(houseData)
+      data = `
+      <div class="house">
+        <div class="house-title">
+          <h3> ${house.title} </h3>
+          <hr>
+        </div>
+        <div class="house-image">
+          <img src=${house.image} alt="house pict" />
+        </div>
+        <div class="house-detail">
+          <div class="house-description">
+            <p>
+              ${house.description}
+            </p>
+          </div>
+          <div class="house-price">
+            <p> ${house.price} </p>
+          </div>
+          <div class="house-map">
+            <p> This is a map </p>
+          </div>
+      `
+      $('.house-collections').append(data)
     },
   });
 }
