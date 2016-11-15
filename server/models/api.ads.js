@@ -7,8 +7,13 @@ let AdsSchema = new Schema({
   title : String,
   description : String,
   photo : String,
-  long  : String,
-  lat : String,
+  location : {
+    address : String,
+    addressCountry : String,
+    postalCode : String,
+    long  : String,
+    lat : String,
+  }
 },{
   timestamps: true
 })
