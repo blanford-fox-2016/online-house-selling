@@ -14,7 +14,7 @@ const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 mongoose.connect(process.env.DATABASE)
 
-var questions = require('./routes/house');
+var house = require('./routes/house');
 
 var app = express();
 
@@ -32,7 +32,7 @@ app.use(cors())
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/house', questions);
+app.use('/api/house', house);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

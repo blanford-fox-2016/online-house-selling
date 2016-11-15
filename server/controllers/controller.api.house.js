@@ -10,7 +10,7 @@ module.exports = {
                 'location.address': 'address a',
                 'location.long': '345',
                 'location.lat': '123',
-                photoPath: 'path a',
+                photoPath: 'https://i.ytimg.com/vi/Xx6t0gmQ_Tw/maxresdefault.jpg',
             },
             {
                 title: 'title b',
@@ -18,7 +18,7 @@ module.exports = {
                 'location.address': 'address b',
                 'location.long': '345',
                 'location.lat': '123',
-                photoPath: 'path b',
+                photoPath: 'http://wendypatton.com/wp-content/uploads/2014/07/house-siding.jpg',
             },
             {
                 title: 'title c',
@@ -26,7 +26,7 @@ module.exports = {
                 'location.address': 'address c',
                 'location.long': '345',
                 'location.lat': '123',
-                photoPath: 'path c',
+                photoPath: 'https://nwhm.com/sites/default/files/styles/renderings-2x/public/renderings/garden-hosue_0002_Layer-12.jpg?itok=i69UXy2v',
             }
         ]
 
