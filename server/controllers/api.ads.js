@@ -14,7 +14,7 @@ let allAds = (req, res) => {
     if(err) res.status(400).json({'error': `Error: ${err}`})
     if(!ads) res.status(404).json({'message': 'Failed to get all ads'})
     res.status(200).json(ads)
-  }).sort({_id: -1})
+  }).sort({createdAt: -1})
 }
 
 /*
@@ -58,7 +58,19 @@ let editAd = (req, res) => {
   console.log(req.body.title);
   Ad.findOneAndUpdate({
     _id: req.params.id
-  }, req.body,
+  }, {
+    title : req.body.title,
+    description: req.body.description,
+    photo: req.body.photo,
+    price: req.body.price,
+    location: {
+      address: req.body.address,
+      addressCountry: req.body.addressCountry,
+      postalCode: req.body.postalCode,
+      long: 0,
+      lat: 0
+    }
+  },
   {
     new: true
   }, (err, updated_ad) => {
