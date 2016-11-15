@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stack Overscramble</title>
+
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="modal fade" id="formEditAnswer" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Answer</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Content:</label>
+                        <div class="col-sm-10">
+                            <textarea id="inputEditAnswer" name="answerEdit" rows="5" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button id="submitEditAnswer" type="submit" class="btn btn-default">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">Stack<b>overscramble</b></a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+                <li><a href="user.html">User</a></li>
+            </ul>
+            <ul id="rightNavLogin" class="nav navbar-nav navbar-right">
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div id="rowOfQuestion">
+
+            </div>
+
+            <hr>
+            <h4 class="col-sm-11 col-sm-offset-1">Answer</h4>
+            <div id="rowOfAnswer">
+
+            </div>
+
+
+
+            <hr class="col-sm-12">
+
+            <div id="answerForm" class="row">
+                <div class="col-sm-11 col-sm-offset-1">
+                    <form>
+                        <div class="form-group">
+                            <label class="control-label">Your Answer</label>
+                            <textarea name="answer" rows="5" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button id="submitAnswer" type="submit" class="btn btn-default">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script src="lib/jquery/dist/jquery.min.js"></script>
+<script src="lib/purl/purl.js"></script>
+<script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="tokenScript.js"></script>
+<script>
+    $(document).ready(function () {
+        if (!Auth.getToken()) window.location.href = 'http://127.0.0.1:8080/login.html'
+        let questionId = $.url().param('id');
+        let rowOfQuestion = $('#rowOfQuestion')
+        let rowOfAnswer = $('#rowOfAnswer')
+        $.ajax({
+            url: `http://localhost:3000/api/question/${questionId}`,
+            success: function (data) {
+                let html = `
+                <div class="row">
+                    <h3 class="col-sm-11 col-sm-offset-1">${data.title}</h3>
+                    <hr class="col-sm-12">
+                    <div class="col-sm-1 text-center">
+                        <div>
+                            <button id="${data._id}" name="voteQuestion" class="btn btn-success">Votes</button>
+                        </div>
+                        <div id="votesQuestionTotal">${data.votes.length}</div>
+                    </div>
+                    <div class="col-sm-11">
+                        <div class="panel panel-default answer">
+                            <div class="panel-body">
+                                ${data.content}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                        `
+
+                let answer = []
+                for (var i = 0; i < data.answers.length; i++) {
+                    answer.push(`
+                    <div id="rowAnswer${data.answers[i]._id}" class="row">
+                        <div class="col-sm-1 text-center">
+                            <div>
+                                <button id="${data._id}#${data.answers[i]._id}#${i}" class="btn btn-success" name="voteAnswer">Votes</button>
+                            </div>
+                            <div id="voteAnswerTotal${i}">${data.answers[i].answerVotes.length}</div>
+                        </div>
+                        <div class="col-sm-11">
+                            <div class="panel panel-default answer">
+                            <div class="panel-heading">
+                                <button class="btn btn-warning" onclick="editAnswer('${i}#${data.answers[i]._id}')">Edit</button>
+                                <button class="btn btn-danger" onclick="deleteAnswer('${data.answers[i]._id}')">Delete</button>
+                            </div>
+                                <div class="panel-body">
+                                    ${data.answers[i].answer}
+                                </div>
+                            </div>
+                        </div>
+                    </div>`)
+                }
+
+                rowOfQuestion.append(html)
+                rowOfAnswer.append(answer)
+
+                let navLogin = `
+            <ul id="rightNavLogin" class="nav navbar-nav navbar-right">
+                <li id="userLogout"><a href="#"><span class="glyphicon glyphicon-user"></span> Logout</a></li>
+            </ul>`
+
+                let navNotLogin = `
+            <ul id="rightNavLogin" class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul>`
+
+                if (Auth.getToken()) {
+                    $('#rightNavLogin').replaceWith(navLogin)
+                }
+                else {
+                    $('#rightNavLogin').replaceWith(navNotLogin)
+                }
+            }
+
+        })
+    })
+
+    $(document).on('click', 'button[name="voteQuestion"]', function () {
+
+        $.ajax({
+            url: `http://localhost:3000/api/question/vote/${this.id}`,
+            method: "put",
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                user: Auth.getToken()
+            },
+            success: function (data) {
+
+                let html = `<div id="votesQuestionTotal">${data.votes.length}</div>`
+                $('#votesQuestionTotal').replaceWith(html)
+            }
+        })
+    })
+
+    $(document).on('click', 'button[name="voteAnswer"]', function () {
+        let dataId = this.id.split("#")
+        let questionId = dataId[0]
+        let answerId = dataId[1]
+        let idx = dataId[2]
+        $.ajax({
+            url: `http://localhost:3000/api/question/answer/vote/${questionId}/${answerId}`,
+            method: "put",
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                user: Auth.getToken()
+            },
+            success: function (data) {
+
+                console.log(data)
+                let html = `<div id="voteAnswerTotal${idx}">${data.answers[idx].answerVotes.length}</div>`
+                $(`#voteAnswerTotal${idx}`).replaceWith(html)
+            }
+        })
+    })
+
+    $(document).on('click', 'li[id="userLogout"]', function () {
+        Auth.deauthenticateUser()
+        window.location.href = 'http://127.0.0.1:8080/login.html'
+    })
+
+    //    CREATE ANSWER
+    $(document).on('click', 'button[id="submitAnswer"]', function (e) {
+        e.preventDefault()
+        let questionId = $.url().param('id');
+        let answer = $('textarea[name="answer"]').val()
+
+        $.ajax({
+            url: `http://localhost:3000/api/question/answer/${questionId}`,
+            method: "put",
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                answer: answer
+            },
+            success: function (data) {
+                let html = `
+                    <div id="rowAnswer${data.answers[data.answers.length - 1]._id}" class="row">
+                        <div class="col-sm-1 text-center">
+                            <div>
+                                <button id="${data._id}#${data.answers[data.answers.length - 1]._id}#${data.answers.length - 1}" class="btn btn-success" name="voteAnswer">Votes</button>
+                            </div>
+                            <div id="voteAnswerTotal${data.answers.length - 1}">${data.answers[data.answers.length - 1].answerVotes.length}</div>
+                        </div>
+                        <div class="col-sm-11">
+                            <div class="panel panel-default answer">
+                            <div class="panel-heading">
+                                <button class="btn btn-warning" onclick="editAnswer('${data.answers.length - 1}#${data.answers[data.answers.length - 1]._id}')">Edit</button>
+                                <button class="btn btn-danger" onclick="deleteAnswer('${data.answers[data.answers.length - 1]._id}')">Delete</button>
+                            </div>
+                                <div class="panel-body">
+                                    ${data.answers[data.answers.length - 1].answer}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                            `
+
+                $('#rowOfAnswer:last').append(html)
+                $('textarea[name="answer"]').val("")
+            }
+        })
+    })
+
+    function deleteAnswer(id) {
+        let questionId = $.url().param('id');
+        $.ajax({
+            url: `http://localhost:3000/api/question/answer/${questionId}/${id}`,
+            method: "delete",
+            contentType: 'application/x-www-form-urlencoded',
+            success: function () {
+                $("#rowOfAnswer").find(`#rowAnswer${id}`).remove()
+            }
+        })
+    }
+
+    function editAnswer(id) {
+        let val = id.split("#")
+        let idx = val[0]
+        let answerId = val[1]
+        let questionId = $.url().param('id');
+        $.ajax({
+            url: `http://localhost:3000/api/question/${questionId}/answer/${answerId}`,
+            method: "get",
+            contentType: 'application/x-www-form-urlencoded',
+            success: function (data) {
+
+                $('#formEditAnswer').modal('show');
+                $('textarea[name="answerEdit"]').val(data.answer)
+
+                var temp = $("input[name='answerId']").val()
+                if ( typeof temp != "undefined") {
+                    $("input[name='answerId']").replaceWith(`<input type='hidden' name='answerId' value='${data._id}'>`)
+                    $("input[name='idx']").replaceWith(`<input type='hidden' name='idx' value='${idx}'>`)
+                }
+                else {
+                    $("#formEditAnswer").append(`<input type='hidden' class='form-control' name='answerId' value='${data._id}'>`)
+                    $("#formEditAnswer").append(`<input type='hidden' class='form-control' name='idx' value='${idx}'>`)
+                }
+            }
+        })
+    }
+
+    $(document).on('click', 'button[id="submitEditAnswer"]', function(e) {
+        e.preventDefault()
+        let questionId = $.url().param('id');
+        let answerId = $('input[name="answerId"]').val()
+        let answer = $('textarea[name="answerEdit"]').val()
+        let idx = $('input[name="idx"]').val()
+
+        $.ajax({
+            url: `http://localhost:3000/api/question/${questionId}/answer/${answerId}`,
+            method: "put",
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                answer: answer
+            },
+            success: function (data) {
+                console.log(data)
+                let html = `
+                        <div id="rowAnswer${data.answers[idx]._id}" class="row">
+                        <div class="col-sm-1 text-center">
+                            <div>
+                                <button id="${data._id}#${data.answers[idx]._id}#${idx}" class="btn btn-success" name="voteAnswer">Votes</button>
+                            </div>
+                            <div id="voteAnswerTotal${idx}">${data.answers[idx].answerVotes.length}</div>
+                        </div>
+                        <div class="col-sm-11">
+                            <div class="panel panel-default answer">
+                            <div class="panel-heading">
+                                <button class="btn btn-warning" onclick="editAnswer('${idx}#${data.answers[idx]._id}')">Edit</button>
+                                <button class="btn btn-danger" onclick="deleteAnswer('${data.answers[idx]._id}')">Delete</button>
+                            </div>
+                                <div class="panel-body">
+                                    ${data.answers[idx].answer}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                `
+
+                $(`#rowAnswer${answerId}`).replaceWith(html)
+                $('textarea[name="answerEdit"]').val("")
+                $('#formEditAnswer').modal('hide');
+            }
+        })
+    });
+
+</script>
+</html>

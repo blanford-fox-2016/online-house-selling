@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stack Overscramble</title>
+
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">Stack<b>overscramble</b></a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+                <li><a href="user.html">User</a></li>
+            </ul>
+            <ul id="rightNavLogin" class="nav navbar-nav navbar-right">
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!--MODAL CREATE QUESTION-->
+<div class="modal fade" id="formQuestion" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Create Question</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Title:</label>
+                        <div class="col-sm-10">
+                            <input id="inputTitle" name="title" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Content:</label>
+                        <div class="col-sm-10">
+                            <textarea name="content" id="inputContent" rows="5" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button id="submitQuestion" type="submit" class="btn btn-default">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--MODAL EDIT QUESTION-->
+<div class="modal fade" id="formEditQuestion" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Question</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Title:</label>
+                        <div class="col-sm-10">
+                            <input id="inputEditTitle" name="titleEdit" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Content:</label>
+                        <div class="col-sm-10">
+                            <textarea id="inputEditContent" name="contentEdit" rows="5" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button id="submitEditQuestion" type="submit" class="btn btn-default">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="container">
+
+    <div class="row">
+        <h1 class="text-center">Stack<b>overscramble</b></h1>
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#formQuestion">Create Question</button>
+    </div>
+
+    <div id="rowOfQuestion">
+
+    </div>
+
+</div>
+
+</body>
+
+<script src="lib/jquery/dist/jquery.min.js"></script>
+<script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="tokenScript.js"></script>
+<script>
+    <!--GET ALL QUESTION-->
+    $(document).ready(function () {
+        var rowOfQuestion = $('#rowOfQuestion')
+
+        if (!Auth.getToken() || typeof Auth.getToken() == "undefined") window.location.href = 'http://127.0.0.1:8080/login.html'
+
+        $.ajax({
+            url: "http://localhost:3000/api/question",
+            success: function (data) {
+
+                let question = []
+                for (var i = 0; i < data.length; i++) {
+                    question.push(`
+                                <div id="rowQuestion${data[i].questionId}" class="row">
+                                    <hr>
+                                    <div class="col-sm-12">
+                                        <div id="rowQuestion${data[i].questionId}" class="row">
+                                            <div class="col-sm-1 text-center">
+                                                <div>${data[i].votes.length}</div>
+                                                <div>votes</div>
+                                            </div>
+                                            <div class="col-sm-1 text-center">
+                                                <div>${data[i].answers.length}</div>
+                                                <div>answers</div>
+                                            </div>
+                                            <div class="col-sm-1 text-center">
+                                                <div>10</div>
+                                                <div>view</div>
+                                            </div>
+                                            <div class="col-sm-7">
+                                                <h4><a href="question.html?id=${data[i].questionId}">${data[i].title}</a></h4>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <button class="btn btn-warning" onclick="editQuestion('${data[i].questionId}')">Edit</button>
+                                                <button class="btn btn-danger" onclick="deleteQuestion('${data[i].questionId}')">Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                        `)
+                }
+
+                rowOfQuestion.append(question.join(""))
+
+                let navLogin = `
+            <ul id="rightNavLogin" class="nav navbar-nav navbar-right">
+                <li id="userLogout"><a href="#"><span class="glyphicon glyphicon-user"></span> Logout</a></li>
+            </ul>`
+
+                let navNotLogin = `
+            <ul id="rightNavLogin" class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul>`
+
+                if (Auth.getToken()) {
+                    $('#rightNavLogin').replaceWith(navLogin)
+                }
+                else {
+                    $('#rightNavLogin').replaceWith(navNotLogin)
+                }
+
+            }
+        })
+    })
+
+//    CREATE QUESTION
+    $(document).on('click', 'button[id="submitQuestion"]', function (e) {
+        e.preventDefault()
+        let title = $('input[name="title"]').val()
+        let content = $('textarea[name="content"]').val()
+
+        $.ajax({
+            url: "http://localhost:3000/api/question",
+            method: "post",
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                user: Auth.getToken(),
+                title: title,
+                content: content
+            },
+            success: function (data) {
+
+                let html = `
+                        <div id="rowQuestion${data.questionId}" class="row">
+                            <hr>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-1 text-center">
+                                        <div>${data.votes.length}</div>
+                                        <div>votes</div>
+                                    </div>
+                                    <div class="col-sm-1 text-center">
+                                        <div>${data.answers.length}</div>
+                                        <div>answers</div>
+                                    </div>
+                                    <div class="col-sm-1 text-center">
+                                        <div>10</div>
+                                        <div>view</div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <h4><a href="question.html?id=${data.questionId}">${data.title}</a></h4>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-warning" onclick="editQuestion('${data.questionId}')">Edit</button>
+                                        <button class="btn btn-danger" onclick="deleteQuestion('${data.questionId}')">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                `
+
+                $('#rowOfQuestion:last').append(html)
+                $('input[name="title"]').val("")
+                $('textarea[name="content"]').val("")
+                $('#formQuestion').modal('hide');
+            }
+        })
+    })
+    
+    $(document).on('click', 'li[id="userLogout"]', function () {
+        Auth.deauthenticateUser()
+        window.location.href = 'http://127.0.0.1:8080/login.html'
+    })
+
+
+    function deleteQuestion(questionId) {
+        $.ajax({
+            url: `http://localhost:3000/api/question/${questionId}`,
+            method: "delete",
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                questionId: questionId
+            },
+            success: function () {
+                $("#rowOfQuestion").find(`#rowQuestion${questionId}`).remove()
+            }
+        })
+    }
+
+    function editQuestion(questionId) {
+        $.ajax({
+            url: `http://localhost:3000/api/question/${questionId}`,
+            method: "get",
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                questionId: questionId
+            },
+            success: function (data) {
+                $('#formEditQuestion').modal('show');
+                $('input[name="titleEdit"]').val(data.title)
+                $('textarea[name="contentEdit"]').val(data.content)
+
+                var temp = $("input[name='questionId']").val()
+                if ( typeof temp != "undefined") {
+                    $("input[name='questionId']").replaceWith(`<input type='hidden' name='questionId' value='${data.questionId}'>`)
+                }
+                else {
+                    $("#formEditQuestion").append(`<input type='hidden' class='form-control' name='questionId' value='${data.questionId}'>`)
+                }
+            }
+        })
+
+    }
+
+    $(document).on('click', 'button[id="submitEditQuestion"]', function(e) {
+        e.preventDefault()
+        let questionId = $('input[name="questionId"]').val()
+        let titleEdit = $('input[name="titleEdit"]').val()
+        let contentEdit = $('textarea[name="contentEdit"]').val()
+
+        $.ajax({
+            url: `http://localhost:3000/api/question/${questionId}`,
+            method: "put",
+            contentType: 'application/x-www-form-urlencoded',
+            data: {
+                title: titleEdit,
+                content: contentEdit
+            },
+            success: function (data) {
+                console.log(data)
+                let html = `
+                        <div id="rowQuestion${data.questionId}" class="row">
+                            <hr>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-1 text-center">
+                                        <div>${data.votes.length}</div>
+                                        <div>votes</div>
+                                    </div>
+                                    <div class="col-sm-1 text-center">
+                                        <div>${data.answers.length}</div>
+                                        <div>answers</div>
+                                    </div>
+                                    <div class="col-sm-1 text-center">
+                                        <div>10</div>
+                                        <div>view</div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <h4><a href="question.html?id=${data.questionId}">${data.title}</a></h4>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-warning" onclick="editQuestion('${data.questionId}')">Edit</button>
+                                        <button class="btn btn-danger" onclick="deleteQuestion('${data.questionId}')">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                `
+
+                $(`#rowQuestion${data.questionId}`).replaceWith(html)
+                $('input[name="titleEdit"]').val("")
+                $('textarea[name="contentEdit"]').val("")
+                $('#formEditQuestion').modal('hide');
+            }
+        })
+    });
+
+
+
+</script>
+
+</html>

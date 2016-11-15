@@ -1,0 +1,22 @@
+{
+  "name": "client",
+  "homepage": "https://github.com/blanford-fox-2016/stackoverflow",
+  "authors": [
+    "Dharmadi Tanamas <dharmadi93@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "lib/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "purl": "^2.3.1"
+  }
+}
