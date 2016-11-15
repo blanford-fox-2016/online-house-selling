@@ -5,15 +5,15 @@
 `npm install -g express-generator live-server`
 
 ## Install Local Depedencies
-
+`cd server`
 `npm install`
 
 ## Run Server
-
+`cd server`
 `npm run dev`
 
 ## Run Client
-
+`cd client`
 `live-server`
 
 ## Routes
