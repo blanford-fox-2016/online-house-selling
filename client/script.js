@@ -149,12 +149,32 @@ function getHouseId(data) {
     let price = `input[name=editPrice]`
     let long = `input[name=editLong]`
     let lat = `input[name=editLat]`
+    let photoURL = `input[name=editPhoto-url]`
     $(title).val(data.title)
     $(address).val(data.location.address)
     $(price).val(data.price)
+    $(photoURL).val(data.photoURL)
     $(long).val(data.location.long)
     $(lat).val(data.location.lat)
     $('#formEditHouse').modal('show')
+
+    var mapEditInput = new GMaps({
+        el: '#inputEditMap',
+        zoom: 16,
+        lat: data.location.lat,
+        lng: data.location.long,
+        click: function(e) {
+            console.log(e.latLng)
+            mapEditInput.removeMarkers();
+            mapEditInput.addMarker({
+                lat: e.latLng.lat(),
+                lng: e.latLng.lng()
+            });
+
+            $('input[name="editLat"]').val(e.latLng.lat())
+            $('input[name="editLong"]').val(e.latLng.lng())
+        }
+    });
 
     let temp = $("input[name='id']").val()
     if ( typeof temp != "undefined") {
@@ -219,15 +239,18 @@ function updateViewAfterUpdate(data) {
                             <p>Title : ${data.title}</p>
                             <p>Address : ${data.location.address}</p>
                             <p>Price : ${data.price}</p>
-                            <p>Longitute : ${data.location.long}</p>
-                            <p>Latitude : ${data.location.lat}</p>
                             <button id="edit#${data._id}" name="buttonEdit" class="btn btn-warning">Edit</button>
                             <button id="delete#${data._id}" name="buttonDelete" class="btn btn-danger">Delete</button>
+                            
+                            <div id="map" class="map" data-id="${data._id}"></div>
                         </div>
                     </div>
                 </div>
 `
+
     $(`#rowOfDetailHouse`).replaceWith(html)
+
+    initMap(data.location.lat, data.location.long)
 
     $('#formEditHouse').modal('hide')
     $("input[name='title']").val("")

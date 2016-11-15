@@ -6,7 +6,8 @@
     height: 300px;
 }
 
-#formCreateHouse #inputMap {
+#inputMap,
+#inputEditMap {
     width: 300px !important;
     height: 300px !important;
 }

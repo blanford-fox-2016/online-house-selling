@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
         callback(null, `${Date.now()}-${file.originalname}`)
     }
 })
-const upload = multer({ storage: storage }).single('photo')
+const upload = multer({ storage: storage }).single('photoFile')
 
 module.exports = {
     seedHouse: function (req, res) {
@@ -63,7 +63,7 @@ module.exports = {
         })
     },
 
-    createHouse: function (req, res) {
+    createHouse: function (req, res, next) {
 
         // console.log(question)
         const house = {
@@ -76,7 +76,9 @@ module.exports = {
         }
         House.create(house, function (err, data) {
             if (err) res.json(err)
-            else res.json(data)
+            else {
+                res.json(data)
+            }
         })
 
         // upload(req, res, function (err) {
@@ -84,6 +86,7 @@ module.exports = {
         //     else if (req.file.filename) {
         //         // logic untuk upload file
         //         // logic untuk assign file path ke photoFile
+        //         res.json("updload")
         //     }
         //     else res.end('Error no file!', err)
         // })
