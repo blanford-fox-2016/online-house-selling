@@ -132,14 +132,14 @@
             <p>
               {{house.description}}
             </p>
-            <div v-bind:id="'map'+house._id" style="width:100%;height:200px;"></div>
-            <a data-toggle="collapse" v-bind:data-target="'#detailHouse_'+house._id" aria-expanded="false" v-bind:aria-controls="'detailHouse_'+house._id">See More</a>
+            <!-- <div v-bind:id="'map'+house._id" style="width:100%;height:200px;"></div> -->
+            <a data-toggle="collapse" v-bind:data-target="'#detailHouse_'+house._id" aria-expanded="false" v-bind:aria-controls="'detailHouse_'+house._id" v-on:click.prevent=renderMap(house._id)>See More</a>
             <div v-bind:id="'detailHouse_'+house._id" class="collapse">
               <p><strong>Price : </strong> Rp {{house.price}}</p>
               <p><strong>Owner : </strong> {{house.owner}}</p>
               <p><strong>Phone : </strong> {{house.phone}}</p>
               <p><strong>Address : </strong> {{house.address}}</p>
-              <!-- <div v-bind:id="'map'+house._id" style="width:100%;height:200px;"></div> -->
+              <div v-bind:id="'map'+house._id" style="width:100%;height:200px;"></div>
             </div>
           </div>
         </div>

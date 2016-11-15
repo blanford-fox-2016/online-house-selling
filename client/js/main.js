@@ -37,19 +37,23 @@ var app = new Vue({
       app.newphone = ""
       app.newaddress = ""
     },
-    renderMap: function(resdata) {
+    renderMap: function(id) {
       // console.log('rendermap dengan ' + JSON.stringify(resdata));
 
-      for (var i = 0; i < resdata.length; i++) {
+      // for (var i = 0; i < resdata.length; i++) {
         // console.log('ini resdata:' +(resdata[i]._id));
-        var mapdiv = '#map'+resdata[i]._id;
-        console.log(mapdiv);
-        new GMaps({
-          div: mapdiv,
-          lat: -12.043333,
-          lng: -77.028333
-        });
-      }
+        var mapdiv = '#map'+id;
+        // console.log(mapdiv);
+        setTimeout(function(){
+          console.log(mapdiv);
+          new GMaps({
+            div: mapdiv,
+            lat: -12.043333,
+            lng: -77.028333
+          });
+        }, 1000)
+
+      // }
     },
     // retrieve all houses from api
     getAllHouses: function()
@@ -58,7 +62,7 @@ var app = new Vue({
       .then(function (response) {
         app.houses = response.data;
         console.log(response);
-        setTimeout(function(){app.renderMap(response.data)}, 5000)
+        // setTimeout(function(){app.renderMap(response.data)}, 5000)
 
       })
       .catch(function (error) {
