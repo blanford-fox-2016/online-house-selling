@@ -20,7 +20,10 @@ const House = new Schema({
             type: String
         }
     },
-    photoPath: {
+    photoURL: {
+        type: String,
+    },
+    photoFile: {
         type: String,
     }
 }, {

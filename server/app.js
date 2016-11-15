@@ -9,6 +9,8 @@ var bodyParser = require('body-parser');
 const cors = require('cors')
 const session = require('express-session')
 const jwt = require('jsonwebtoken')
+const multer  = require('multer')
+const upload = multer({ dest: './public/images/' })
 
 const mongoose = require('mongoose')
 mongoose.Promise = global.Promise

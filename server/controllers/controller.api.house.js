@@ -1,5 +1,16 @@
 const House = require('../models/house')
 const passport = require('passport')
+const multer  = require('multer')
+
+const storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, `public/images`)
+    },
+    filename: function (req, file, callback) {
+        callback(null, `${Date.now()}-${file.originalname}`)
+    }
+})
+const upload = multer({ storage: storage }).single('photo')
 
 module.exports = {
     seedHouse: function (req, res) {
@@ -53,21 +64,30 @@ module.exports = {
     },
 
     createHouse: function (req, res) {
+
+        // console.log(question)
         const house = {
             title: req.body.title,
             price: req.body.price,
             'location.address': req.body.address,
             'location.long': '',
             'location.lat': '',
-            photoPath: '',
+            photoURL: req.body.photoURL
         }
-
-        // console.log(question)
-
         House.create(house, function (err, data) {
             if (err) res.json(err)
             else res.json(data)
         })
+
+        // upload(req, res, function (err) {
+        //     if (err) return res.end('Error uploading file!', err)
+        //     else if (req.file.filename) {
+        //         // logic untuk upload file
+        //         // logic untuk assign file path ke photoFile
+        //     }
+        //     else res.end('Error no file!', err)
+        // })
+
     },
 
     deleteHouseByHouseId: function (req, res) {
@@ -95,7 +115,8 @@ module.exports = {
             price: req.body.price,
             'location.address': req.body.address,
             'location.long': req.body.long,
-            'location.lat': req.body.lang,
+            'location.lat': req.body.lat,
+            photoURL: req.body.photoURL
         }, {
             new: true,
             upsert: false
