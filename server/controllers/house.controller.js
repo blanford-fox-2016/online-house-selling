@@ -15,9 +15,7 @@ module.exports = {
   generate(req, res) {
     House
       .create(req.body)
-      .then((house) => {
-        console.log(house);
-        res.json(house)})
+      .then((house) => res.json(house))
       .catch((err) => res.json(err))
   },
 

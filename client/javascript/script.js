@@ -20,7 +20,6 @@ let generatingHouse = () => {
     url: 'http://localhost:3000/api/houses',
     data: houseData,
     success: function(house) {
-      console.log(houseData)
       data = `
       <div class="house">
         <div class="house-title">
@@ -43,6 +42,7 @@ let generatingHouse = () => {
             <p> This is a map </p>
           </div>
       `
+      alert('house is inserted already')
       $('.house-collections').append(data)
     },
   });
@@ -54,7 +54,6 @@ let showAll = () => {
     type: "GET",
     url: 'http://localhost:3000/api/houses',
     success: function(house) {
-      console.log(house)
       let data = ''
       for(var i = 0; i < house.length; i += 1) {
         data += `
