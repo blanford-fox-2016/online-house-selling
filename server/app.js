@@ -7,8 +7,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 // connetion to DB
-var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/house_selling');
+mongoose.Promise = global.Promise;
 
 const routes = require('./routes/index');
 const houses = require('./routes/house.route');
