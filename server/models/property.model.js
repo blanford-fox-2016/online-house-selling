@@ -27,6 +27,9 @@ let propertySchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    image: {
+        type: String
+    },
     contact: {
         name: String,
         phone: String,

@@ -1,4 +1,6 @@
-$(document).ready(function() {})
+$(document).ready(function() {
+    initMap()
+})
 
 function loadProperty() {
     $('#main-container').empty()
@@ -15,7 +17,7 @@ function loadProperty() {
                 html += `
                     <div class="col-sm-6 col-md-3">
                         <div class="thumbnail">
-                            <img src="src/img/home-icon.png" class="img-responsive" alt="Responsive image">
+                            <img src="${data[i].image}" class="img-responsive" alt="Responsive image">
                             <div class="caption">
                                 <hr>
                                 <p class='text-center'><strong>${data[i].title}</strong></p>
@@ -40,7 +42,7 @@ function loadProperty() {
                                             </div>
                                             <div class="modal-body">
                                             <div class='text-xs-center'>
-                                            <img src="src/img/home-icon.png" class="rounded mx-auto d-block" alt="Responsive image">
+                                            <img src="${data[i].image}" class="img-responsive" alt="src/img/home-icon.png">
                                             </div>
                                             <div class="alert alert-success" role="alert">
                                                 <h4 class="alert-heading"><strong>Property Details</strong></h4>
@@ -100,18 +102,6 @@ function loadProperty() {
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
-                                                            <label for="example-text-input" class="col-xs-2 col-form-label">Latitude</label>
-                                                            <div class="col-xs-10">
-                                                                <input class="form-control" type="text" placeholder="lat" id="update-lat${data[i].property_id}" value='${data[i].location.lat}'>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="example-text-input" class="col-xs-2 col-form-label">Longitude</label>
-                                                            <div class="col-xs-10">
-                                                                <input class="form-control" type="text" placeholder="long" id="update-long${data[i].property_id}" value='${data[i].location.long}'>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
                                                             <label for="example-text-input" class="col-xs-2 col-form-label">Detail Property</label>
                                                             <div class="col-xs-10">
                                                                 <input class="form-control" type="text" placeholder="Details" id="update-details${data[i].property_id}" value='${data[i].details}'>
@@ -141,6 +131,13 @@ function loadProperty() {
                                                                 <input class="form-control" type="text" placeholder="Email" id="update-email${data[i].property_id}" value='${data[i].contact.email}'>
                                                             </div>
                                                         </div>
+                                                        <div class="form-group row">
+                                                            <label for="example-text-input" class="col-xs-2 col-form-label">Location</label>
+                                                            <div class="col-xs-10">
+                                                                <div class="map-container"></div>
+                                                            </div>
+                                                        </div>
+
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-primary" onclick='editProperty(${data[i].property_id})'>Save changes</button>
@@ -220,18 +217,6 @@ function formPage() {
       </div>
   </div>
   <div class="form-group row">
-      <label for="example-text-input" class="col-xs-2 col-form-label">Latitude</label>
-      <div class="col-xs-10">
-          <input class="form-control" type="text" placeholder="lat" id="form-lat">
-      </div>
-  </div>
-  <div class="form-group row">
-      <label for="example-text-input" class="col-xs-2 col-form-label">Longitude</label>
-      <div class="col-xs-10">
-          <input class="form-control" type="text" placeholder="long" id="form-long">
-      </div>
-  </div>
-  <div class="form-group row">
       <label for="example-text-input" class="col-xs-2 col-form-label">Detail Property</label>
       <div class="col-xs-10">
           <input class="form-control" type="text" placeholder="Details" id="form-details">
@@ -243,6 +228,13 @@ function formPage() {
           <input class="form-control" type="text" placeholder="Price" id="form-price">
       </div>
   </div>
+  <div class="form-group row">
+      <label for="example-text-input" class="col-xs-2 col-form-label">Image</label>
+      <div class="col-xs-10">
+          <input class="form-control" type="text" placeholder="Price" id="form-image">
+      </div>
+  </div>
+
   <div class="form-group row">
       <label for="example-text-input" class="col-xs-2 col-form-label">Seller Name</label>
       <div class="col-xs-10">
@@ -261,6 +253,14 @@ function formPage() {
           <input class="form-control" type="text" placeholder="Email" id="form-email">
       </div>
   </div>
+  <div class="form-group row">
+      <label for="example-text-input" class="col-xs-2 col-form-label">Location</label>
+      <div id='map-container'></div>
+      <div class="col-xs-10">
+          <input class="form-control" type="hidden" placeholder="Map" id="form-map">
+      </div>
+  </div>
+
   <button type="button" class="btn btn-primary" onclick='createProperty()'>Create</button>
   </div>
   `
@@ -275,6 +275,7 @@ function createProperty() {
     let $long = $('#form-long').val()
     let $details = $('#form-details').val()
     let $price = $('#form-price').val()
+    let $image = $('#form-image').val()
     let $name = $('#form-name').val()
     let $phone = $('#form-phone').val()
     let $email = $('#form-email').val()
@@ -291,6 +292,7 @@ function createProperty() {
             long: $long,
             details: $details,
             price: $price,
+            image: $image,
             name: $name,
             phone: $phone,
             email: $email
@@ -306,7 +308,7 @@ function createProperty() {
 }
 
 function editProperty(parameter) {
-
+    initMap()
     let updtitle = $(`#update-title${parameter}`).val()
     let updproperty_type = $(`#update-type${parameter}`).val()
     let updaddress = $(`#update-address${parameter}`).val()
@@ -366,9 +368,31 @@ function deleteProperty(parameter) {
 }
 
 function initMap() {
-    new GMaps({
+    var map = new GMaps({
         el: '#map-container',
-        lat: -12.043333,
-        lng: -77.028333
+        lat: -6.175,
+        lng: 106.827,
+        click: function(e) {
+            map.removeMarkers()
+            console.log(e.latLng)
+            var lat = e.latLng.lat()
+            var lng = e.latLng.lng()
+            console.log(lat, lng)
+            map.addMarker({
+                lat: lat,
+                lng: lng,
+                title: 'Marker',
+                infoWindow: {
+                    content: '<p>Marker</p>'
+                }
+            });
+        }
+    })
+    google.maps.event.addDomListener(window, 'load', initMap);
+    google.maps.event.addDomListener(window, "resize", function() {
+        var center = map.getCenter();
+        google.maps.event.trigger(map, "resize");
+        map.setCenter(center);
     });
+
 }

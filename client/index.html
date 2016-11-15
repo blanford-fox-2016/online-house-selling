@@ -14,9 +14,9 @@
     <div class="container-fluid">
         <div class="container">
             <ul class="nav nav-pills" role="tablist">
-                <li role="presentation" id='panel-menu-home'><a href="#" onclick="loadProperty()">Home</a></li>
+                <li role="presentation" id='panel-menu-home'><a href="#" onclick='loadProperty(event)'>Home</a></li>
                 <li role="presentation" id='panel-menu-form'><a href="#" onclick="formPage()">Create new Property</a></li>
-                <li role="presentation" id='panel-menu-search'><a href="#">Search</a></li>
+                <li role="presentation" id='panel-menu-search'><a>Search</a></li>
             </ul>
             <div class="jumbotron">
                 <img src="src/img/city-banner.jpg" class="img-responsive" alt="Responsive image">
@@ -33,17 +33,16 @@
                 </div>
                 <hr>
                 <p class="mb-0"><strong>Maps : </strong></p>
-                <div class="alert alert-warning" role="alert">
                 <div id="map-container" class="col-md-6"></div>
-                </div>
             </div>
         </div>
     </div>
 </body>
 <script src="./src/javascripts/jquery.min.js" charset="utf-8"></script>
 <script src="./src/javascripts/bootstrap.min.js" charset="utf-8"></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMfgGfyByBQRnDHJosBhC0vjXdsy1fp2w">
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMfgGfyByBQRnDHJosBhC0vjXdsy1fp2w">
 </script>
+<script src="src/javascripts/gmaps.js" charset="utf-8"></script>
 <script src="./src/javascripts/javascript.js" charset="utf-8"></script>
 
 

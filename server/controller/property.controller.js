@@ -24,6 +24,7 @@ module.exports = {
             },
             details: req.body.details,
             price: req.body.price,
+            image: req.body.image,
             contact: {
                 name: req.body.name,
                 phone: req.body.phone,
@@ -63,6 +64,7 @@ module.exports = {
             },
             details: req.body.details,
             price: req.body.price,
+            image: req.body.image,
             contact: {
                 name: req.body.name,
                 phone: req.body.phone,
