@@ -14,7 +14,7 @@ let allAds = (req, res) => {
     if(err) res.status(400).json({'error': `Error: ${err}`})
     if(!ads) res.status(404).json({'message': 'Failed to get all ads'})
     res.status(200).json(ads)
-  })
+  }).sort({_id: -1})
 }
 
 /*
@@ -26,6 +26,7 @@ let allAds = (req, res) => {
   * @apiSuccess create new ad
 */
 let addNewAd = (req, res) => {
+  console.log(req.body);
   Ad.create({
     title : req.body.title,
     description: req.body.description,
@@ -163,6 +164,7 @@ let deleteAllAds = (req, res) => {
   * @apiSuccess get one ad
 */
 let getOneAd = (req, res) => {
+  console.log(`get one`);
   Ad.findOne({
     _id: req.params.id
   }, (err, one_ad) => {
