@@ -2,10 +2,9 @@ $(document).ready(function() {})
 
 function loadProperty() {
     $('#main-container').empty()
-    $('#panel-menu-home').className += 'active'
-    $('#panel-menu-form').className = ''
-    $('#panel-menu-search').className = ''
-
+    document.getElementById('panel-menu-home').className = 'active'
+    document.getElementById('panel-menu-form').className = ''
+    document.getElementById('panel-menu-search').className = ''
     let html = ''
     $.ajax({
         url: `http://localhost:3000/api/property`,
@@ -64,6 +63,7 @@ function loadProperty() {
                                                 <p>${data[i].contact.email}</p>
                                                 </div>
 
+
                                             </div>
                                             <!-- Button trigger modal -->
                                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editbutton${data[i].property_id}">
@@ -84,61 +84,61 @@ function loadProperty() {
                                                         <div class="form-group row">
                                                             <label for="example-text-input" class="col-xs-2 col-form-label">Title</label>
                                                             <div class="col-xs-10">
-                                                                <input class="form-control" type="text" placeholder="Title" id="update-title" value='${data[i].title}'>
+                                                                <input class="form-control" type="text" placeholder="Title" id="update-title${data[i].property_id}" value='${data[i].title}'>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label for="example-text-input" class="col-xs-2 col-form-label">Tipe</label>
                                                             <div class="col-xs-10">
-                                                                <input class="form-control" type="text" placeholder="Tipe Property" id="update-type" value='${data[i].property_type}'>
+                                                                <input class="form-control" type="text" placeholder="Tipe Property" id="update-type${data[i].property_id}" value='${data[i].property_type}'>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label for="example-text-input" class="col-xs-2 col-form-label">Address</label>
                                                             <div class="col-xs-10">
-                                                                <input class="form-control" type="text" placeholder="Address" id="update-address" value='${data[i].location.address}'>
+                                                                <input class="form-control" type="text" placeholder="Address" id="update-address${data[i].property_id}" value='${data[i].location.address}'>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label for="example-text-input" class="col-xs-2 col-form-label">Latitude</label>
                                                             <div class="col-xs-10">
-                                                                <input class="form-control" type="text" placeholder="lat" id="update-lat" value='${data[i].location.lat}'>
+                                                                <input class="form-control" type="text" placeholder="lat" id="update-lat${data[i].property_id}" value='${data[i].location.lat}'>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label for="example-text-input" class="col-xs-2 col-form-label">Longitude</label>
                                                             <div class="col-xs-10">
-                                                                <input class="form-control" type="text" placeholder="long" id="update-long" value='${data[i].location.long}'>
+                                                                <input class="form-control" type="text" placeholder="long" id="update-long${data[i].property_id}" value='${data[i].location.long}'>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label for="example-text-input" class="col-xs-2 col-form-label">Detail Property</label>
                                                             <div class="col-xs-10">
-                                                                <input class="form-control" type="text" placeholder="Details" id="update-details" value='${data[i].details}'>
+                                                                <input class="form-control" type="text" placeholder="Details" id="update-details${data[i].property_id}" value='${data[i].details}'>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label for="example-text-input" class="col-xs-2 col-form-label">Price</label>
                                                             <div class="col-xs-10">
-                                                                <input class="form-control" type="text" placeholder="Price" id="update-price" value='${data[i].price}'>
+                                                                <input class="form-control" type="text" placeholder="Price" id="update-price${data[i].property_id}" value='${data[i].price}'>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label for="example-text-input" class="col-xs-2 col-form-label">Seller Name</label>
                                                             <div class="col-xs-10">
-                                                                <input class="form-control" type="text" placeholder="Name" id="update-name" value='${data[i].contact.name}'>
+                                                                <input class="form-control" type="text" placeholder="Name" id="update-name${data[i].property_id}" value='${data[i].contact.name}'>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label for="example-text-input" class="col-xs-2 col-form-label">Phone</label>
                                                             <div class="col-xs-10">
-                                                                <input class="form-control" type="text" placeholder="Phone" id="update-phone" value='${data[i].contact.phone}'>
+                                                                <input class="form-control" type="text" placeholder="Phone" id="update-phone${data[i].property_id}" value='${data[i].contact.phone}'>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label for="example-text-input" class="col-xs-2 col-form-label">Email</label>
                                                             <div class="col-xs-10">
-                                                                <input class="form-control" type="text" placeholder="Email" id="update-email" value='${data[i].contact.email}'>
+                                                                <input class="form-control" type="text" placeholder="Email" id="update-email${data[i].property_id}" value='${data[i].contact.email}'>
                                                             </div>
                                                         </div>
                                                         </div>
@@ -148,7 +148,33 @@ function loadProperty() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button type="button" class="btn btn-danger">Delete  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deletebtn${data[i].property_id}">
+                                              Delete  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                            </button>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="deletebtn${data[i].property_id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                      <span aria-hidden="true">&times;</span>
+                                                    </button>
+
+                                                        </div>
+                                                        <div class="modal-body">
+                                                          <h4 class="modal-title" id="myModalLabel">Are you sure want to delete this property?</h4>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-danger" data-dismiss="modal" onclick='deleteProperty(${data[i].property_id})'>OK</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -169,12 +195,12 @@ function loadProperty() {
 
 function formPage() {
     $('#main-container').empty()
-    $('#panel-menu-home').className = ''
-    $('#panel-menu-form').className += 'active'
-    $('#panel-menu-search').className = ''
+    document.getElementById('panel-menu-home').className = ''
+    document.getElementById('panel-menu-form').className = 'active'
+    document.getElementById('panel-menu-search').className = ''
 
     html = `
-    <div class="col-sm-6 col-md-12">
+    <div class="col-sm-9 col-md-12">
   <div class="form-group row">
       <label for="example-text-input" class="col-xs-2 col-form-label">Title</label>
       <div class="col-xs-10">
@@ -270,6 +296,7 @@ function createProperty() {
             email: $email
         },
         success: function(data) {
+            $('.modal-backdrop').hide()
             console.log(data);
             loadProperty()
 
@@ -280,34 +307,37 @@ function createProperty() {
 
 function editProperty(parameter) {
 
-    let $title = $('#update-title').val()
-    let $property_type = $('#update-type').val()
-    let $address = $('#update-address').val()
-    let $lat = $('#update-lat').val()
-    let $long = $('#update-long').val()
-    let $details = $('#update-details').val()
-    let $price = $('#update-price').val()
-    let $name = $('#update-name').val()
-    let $phone = $('#update-phone').val()
-    let $email = $('#update-email').val()
+    let updtitle = $(`#update-title${parameter}`).val()
+    let updproperty_type = $(`#update-type${parameter}`).val()
+    let updaddress = $(`#update-address${parameter}`).val()
+    let updlat = $(`#update-lat${parameter}`).val()
+    let updlong = $(`#update-long${parameter}`).val()
+    let upddetails = $(`#update-details${parameter}`).val()
+    let updprice = $(`#update-price${parameter}`).val()
+    let updname = $(`#update-name${parameter}`).val()
+    let updphone = $(`#update-phone${parameter}`).val()
+    let updemail = $(`#update-email${parameter}`).val()
     console.log('EDIT FUNCTION');
     $.ajax({
         url: `http://localhost:3000/api/property/${parameter}`,
         method: "put",
         contentType: 'application/x-www-form-urlencoded',
         data: {
-            title: $title,
-            property_type: $property_type,
-            address: $address,
-            lat: $lat,
-            long: $long,
-            details: $details,
-            price: $price,
-            name: $name,
-            phone: $phone,
-            email: $email
+            title: updtitle,
+            property_type: updproperty_type,
+            address: updaddress,
+            lat: updlat,
+            long: updlong,
+            details: upddetails,
+            price: updprice,
+            name: updname,
+            phone: updphone,
+            email: updemail
         },
         success: function(data) {
+            // $(`#myModal${data.property_id}`).modal('toggle')
+            $('.modal-backdrop').hide()
+            $('#main-container').empty()
             console.log(data);
             loadProperty()
 
@@ -315,4 +345,30 @@ function editProperty(parameter) {
     })
 
 
+}
+
+function deleteProperty(parameter) {
+
+
+    $.ajax({
+        url: `http://localhost:3000/api/property/${parameter}`,
+        method: "delete",
+        contentType: 'application/x-www-form-urlencoded',
+        data: {
+            property_id: parameter
+        },
+        success: function() {
+            $('.modal-backdrop').hide()
+            console.log(data);
+            loadProperty()
+        }
+    })
+}
+
+function initMap() {
+    new GMaps({
+        el: '#map-container',
+        lat: -12.043333,
+        lng: -77.028333
+    });
 }

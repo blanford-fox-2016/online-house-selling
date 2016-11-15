@@ -8,3 +8,7 @@
 .jumbotron {
   background-color: #FF6D00;
 }
+#map-container {
+        height: 400px;
+        width: 100%;
+       }
