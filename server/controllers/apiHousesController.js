@@ -45,7 +45,7 @@ let addNew = (req, res, next) => {
 }
 
 let updateById = (req, res, next) => {
-  Questions.update({
+  Houses.update({
     _id: req.params.id
   }, req.body, (err, updated) => {
     if (err) {
@@ -57,7 +57,7 @@ let updateById = (req, res, next) => {
 }
 
 let deleteById = (req, res, next) => {
-  Questions.remove({
+  Houses.remove({
     _id: req.params.id
   }, (err, deleted) => {
     if (err) {
