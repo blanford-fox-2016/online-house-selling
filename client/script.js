@@ -2,6 +2,26 @@
 let baseURL = 'http://localhost:3000'
 
 $(document).ready(function () {
+    $('#buttonCreateHouse').on('click', function () {
+        console.log("asasa")
+        var mapInput = new GMaps({
+            el: '#inputMap',
+            zoom: 16,
+            lat: -12.043333,
+            lng: -77.028333,
+            click: function(e) {
+                console.log(e.latLng)
+                mapInput.removeMarkers();
+                mapInput.addMarker({
+                    lat: e.latLng.lat(),
+                    lng: e.latLng.lng()
+                });
+
+                $('input[name="lat"]').val(e.latLng.lat())
+                $('input[name="long"]').val(e.latLng.lng())
+            }
+        });
+    })
     getAllHousesData()
 })
 
@@ -85,29 +105,29 @@ function showDetailHouse(data) {
 
     $('#home').replaceWith(html)
 
-    initMap(data._id, data.location.lat, data.location.long)
+    initMap(data.location.lat, data.location.long)
 }
 
-function initMap(id, lat, long) {
-    // console.log($(`.map[data-id=${id}]`))
 
-    var myLatLng = {lat: -25.363, lng: 131.044}
+function initMap(lat, long) {
+    map = new GMaps({
+        div: '#map',
+        zoom: 16,
+        lat: lat,
+        lng: long,
 
-    // Create a map object and specify the DOM element for display.
-    var map = new google.maps.Map(document.getElementById('map'), {
-        center: myLatLng,
-        scrollwheel: false,
-        zoom: 4
-    })
-
-    // Create a marker and set its position.
-    var marker = new google.maps.Marker({
-        map: map,
-        position: myLatLng,
-        title: 'Hello World!'
     });
 
+    map.addMarker({
+        lat: lat,
+        lng: long,
+        title: 'Lima',
+        click: function(e) {
+            alert('You clicked in this marker');
+        }
+    });
 }
+
 
 $(document).on('click', 'button[name="buttonEdit"]', function () {
     let tempId = this.id.split("#")
@@ -287,7 +307,7 @@ $(document).on('click', 'button[id="backToHome"]', function () {
     })
 })
 
-//    CREATE QUESTION
+//    CREATE HOUSE
 $(document).on('click', 'button[id="submitHouse"]', function (e) {
     e.preventDefault()
     createHouse()
@@ -301,7 +321,7 @@ function createHouse() {
     let lat = $('input[name="lat"]').val()
     let long = $('input[name="long"]').val()
     let photoURL = $('input[name="photoURL"]').val()
-
+    console.log(lat)
     $.ajax({
         url: `${baseURL}/api/house`,
         method: "post",
@@ -323,7 +343,7 @@ function createHouse() {
 
 function updateViewAfterCreateHouse(data) {
     let html = `
-                <div id="rowHouse${data._id}" class="col-sm-3">
+                <div id="rowHouse${data._id}" class="col-lg-3 col-md-6 col-sm-12">
                     <div class="panel panel-default">
                         <div class="panel-heading text-center text-uppercase">
                             ${data.title}

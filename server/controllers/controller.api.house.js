@@ -70,8 +70,8 @@ module.exports = {
             title: req.body.title,
             price: req.body.price,
             'location.address': req.body.address,
-            'location.long': '',
-            'location.lat': '',
+            'location.long': req.body.long,
+            'location.lat': req.body.lat,
             photoURL: req.body.photoURL
         }
         House.create(house, function (err, data) {
