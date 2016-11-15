@@ -87,8 +87,8 @@ div.circle-avatar {
 /*google map stuff*/
 
 #map {
-    height: 600px;
-    width: 600px;
+    height: 200px;
+    width: 100%;
 }
 
 /*google map stuff*/
