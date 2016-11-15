@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./src/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="./src/stylesheets/style.css">
+    <title>Cool Todo</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <ul class="nav nav-tabs">
+            <li role="button" id='todopanel' class="" ><a href="#">Todo list</a></li>
+        </ul>
+        <div class="page-header text-center">
+            <h1>Cool Todo       <small>Populated by AJAX</small> </h1>
+        </div>
+        <div class="container-fluid">
+            <div id="main-container" class='container'>
+                <form class="form-inline" action='http://localhost:3000/api/todo' method='post'>
+                    <div class="form-group">
+                        <label for="exampleInputName2">New Todo</label>
+                        <input type="text" class="form-control" placeholder="Add new To-do" name='todo'>
+                    </div>
+                    <button type="submit" class="btn btn-default">Create Todo</button>
+                </form>
+
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+</body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="./src/javascripts/jquery.min.js" charset="utf-8"></script>
+<script src="./src/javascripts/bootstrap.min.js" charset="utf-8"></script>
+<script src="./src/javascripts/vue.js" charset="utf-8"></script>
+<script src="./src/javascripts/javascript.js" charset="utf-8"></script>
+
+
+</html>
