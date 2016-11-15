@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -10,6 +11,11 @@ const routes = require('./routes/api.ads')
 const app = express();
 
 const cors = require('cors')
+
+//mongosoe
+const mongoose = require('mongoose')
+mongoose.Promise = global.Promise
+mongoose.connect(process.env.MONGODB_URL)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
