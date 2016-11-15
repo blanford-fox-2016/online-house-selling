@@ -33,5 +33,9 @@ router.post('/seed', controller.seedDataAds)
 */
 router.delete('/', controller.deleteAllAds)
 
+/*
+  * get one ad
+*/
+router.get('/:id', controller.getOneAd)
 
 module.exports = router;
