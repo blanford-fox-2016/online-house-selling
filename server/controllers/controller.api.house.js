@@ -92,8 +92,10 @@ module.exports = {
             _id: req.params.houseId
         }, {
             title: req.body.title,
-            'location.address': req.body.address,
             price: req.body.price,
+            'location.address': req.body.address,
+            'location.long': req.body.long,
+            'location.lat': req.body.lang,
         }, {
             new: true,
             upsert: false
