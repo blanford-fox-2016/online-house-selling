@@ -10,7 +10,7 @@
   "location"    : {
     "address"         : String,
     "addressCountry"  : String,
-    "postalCode"      : String,
+    "postalCode"      : Number,
     "long"            : String,
     "lat"             : String,
   },

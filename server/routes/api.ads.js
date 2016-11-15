@@ -26,12 +26,12 @@ router.delete('/:id', controller.deleteAd)
 /*
   * seed ad data
 */
-router.post('/seed', controller.seedDataAds)
+router.post('/seed', controller.seedAds)
 
 /*
   * delete all ads
 */
-router.delete('/', controller.deleteAllAds)
+router.post('/delete_all', controller.deleteAllAds)
 
 /*
   * get one ad
