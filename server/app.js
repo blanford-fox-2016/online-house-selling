@@ -11,6 +11,16 @@ const apiHouse = require('./routes/apiHouse');
 
 const app = express();
 
+const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://127.0.0.1/tanyasaja', (err) => {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('Database connected!');
+  }
+});
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));

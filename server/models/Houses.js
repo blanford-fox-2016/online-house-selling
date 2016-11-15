@@ -28,7 +28,7 @@ let housesSchema = new Schema({
   },
   lat: {
     type: String
-  }
+  },
   long: {
     type: String
   }
