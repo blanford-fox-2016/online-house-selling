@@ -1,0 +1,17 @@
+{
+  "name": "client",
+  "description": "",
+  "main": "/script/script.js",
+  "authors": [
+    "Ken Duigraha utra <kenduigraha@yahoo.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/blanford-fox-2016/online-house-selling",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
