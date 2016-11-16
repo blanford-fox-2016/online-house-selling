@@ -55,7 +55,7 @@ let addNewAd = (req, res) => {
   * @apiSuccess edit a ad
 */
 let editAd = (req, res) => {
-  console.log(req.body.title);
+  console.log(req.body);
   Ad.findOneAndUpdate({
     _id: req.params.id
   }, {
@@ -67,8 +67,8 @@ let editAd = (req, res) => {
       address: req.body.address,
       addressCountry: req.body.addressCountry,
       postalCode: req.body.postalCode,
-      long: 0,
-      lat: 0
+      long: req.body.long,
+      lat: req.body.lat
     }
   },
   {

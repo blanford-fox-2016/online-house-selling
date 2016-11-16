@@ -92,6 +92,10 @@ function updateAd(id){
       $('#modal_update .modal-body #postalCode').val(selected_ad.location.postalCode)
 
       $('#modal_update .modal-body #btn_update').attr("onclick", `processUpdate('${selected_ad._id}')`)
+
+      $('#modal_update').on('shown.bs.modal', function(e){
+        initMap('#edit_map', selected_ad.location.lat, selected_ad.location.long)
+      })
     }
   })
 
@@ -113,9 +117,11 @@ function processUpdate(id){
     price: $('#modal_update .modal-content #price').val(),
     address: $('#modal_update .modal-content #address').val(),
     addressCountry: $('#modal_update .modal-content #addressCountry').val(),
-    postalCode: $('#modal_update .modal-content #postalCode').val()
+    postalCode: $('#modal_update .modal-content #postalCode').val(),
+    lat: $('#lat').val(),
+    long: $('#long').val()
   }
-
+  console.log(data_update);
   $.ajax({
     url: 'http://localhost:3000/api/ads/'+id,
     method: 'PUT',
@@ -237,18 +243,21 @@ function initMap(div_map, lat, lng) {
     click: function(e) {
       console.log(e.latLng.lat());
       console.log(e.latLng.lng());
-      map.removeMarkers()
-      map.addMarker({
-        lat: e.latLng.lat(),
-        lng: e.latLng.lng(),
-        title: 'Lima',
-        click: function(e) {
-          alert('You clicked in this marker');
-        }
-      });
-      $('#lat').val(e.latLng.lat())
-      $('#long').val(e.latLng.lng())
-    }
+      if(div_map != '#show_map'){
+        map.removeMarkers()
+        map.addMarker({
+          lat: e.latLng.lat(),
+          lng: e.latLng.lng(),
+          title: 'Lima',
+          click: function(e) {
+            alert('You clicked in this marker');
+          }
+        });
+
+        $('#lat').val(e.latLng.lat())
+        $('#long').val(e.latLng.lng())
+      }
+      }
   });
   map.addMarker({
     lat: lat,

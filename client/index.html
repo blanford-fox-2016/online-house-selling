@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="./lib/bootstrap/dist/css/bootstrap.min.css">
   <style type="text/css">
-    #map, #show_map {
+    #map, #show_map, #edit_map {
      height: 400px;
      width: 100%;
     }
@@ -384,6 +384,12 @@
             <div class="form-group">
               <label for="postalCode">Input your postal code :</label>
               <input type="text" class="form-control" id="postalCode" name="postalCode">
+            </div>
+            <div class="form-group">
+              <label for="edit_map">Map: </label>
+              <div id="edit_map" name="map"></div>
+              <input type="hidden" id="lat" name="lat" value="">
+              <input type="hidden" id="long" name="long" value="">
             </div>
             <button type="button" class="btn btn-warning btn-lg" id="btn_update" data-dismiss="modal">Update</button>
           </form>
