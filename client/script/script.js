@@ -1,8 +1,9 @@
 $(document).ready(function(){
   showAllAds()
-  addNewAdd()
-
-
+  addNewAd()
+  $('#modal_create').on('shown.bs.modal', function (e) {
+    initMap('#map', -6.1320875, 106.8215248)
+  })
 })
 
 function showAllAds(){
@@ -44,6 +45,10 @@ function showAllAds(){
 function showModal(id) {
   console.log(id);
 
+  // $('#modal_view').on('shown.bs.modal', function(e){
+  //   initMap('#show_map', -6.1320875, 106.8215248)
+  // })
+
   $.ajax({
     url: 'http://localhost:3000/api/ads/'+id,
     method: 'GET',
@@ -58,6 +63,10 @@ function showModal(id) {
       $('#modal_view .modal-body #postalCode').text(`Postal Code: ${selected_ad.location.postalCode}`)
       $('#modal_view .modal-footer #update').attr("onclick", `updateAd('${selected_ad._id}')`)
       $('#modal_view .modal-footer #delete').attr("onclick", `deleteAd('${selected_ad._id}')`)
+      // initMap('#show_map', selected_ad.location.lat, selected_ad.location.long)
+      $('#modal_view').on('shown.bs.modal', function(e){
+        initMap('#show_map', selected_ad.location.lat, selected_ad.location.long)
+      })
     },
     error: function(err){
       console.log(err);
@@ -148,7 +157,7 @@ function processUpdate(id){
   })
 }
 
-function addNewAdd(){
+function addNewAd(){
   $('#btn_add').on('click', function(e){
     e.preventDefault()
     var input_data = {
@@ -158,8 +167,11 @@ function addNewAdd(){
       price: $('#price').val(),
       address: $('#address').val(),
       addressCountry: $('#addressCountry').val(),
-      postalCode: $('#postalCode').val()
+      postalCode: $('#postalCode').val(),
+      lat: $('#lat').val(),
+      long: $('#long').val()
     }
+
     $.post({
       url: 'http://localhost:3000/api/ads',
       data: input_data,
@@ -215,4 +227,32 @@ function deleteAd(id){
       $(`#${deleted_data._id}`).remove()
     }
   })
+}
+// var map
+function initMap(div_map, lat, lng) {
+  var map = new GMaps({
+    div: div_map,
+    lat: lat,
+    lng: lng,
+    click: function(e) {
+      console.log(e.latLng.lat());
+      console.log(e.latLng.lng());
+      map.removeMarkers()
+      map.addMarker({
+        lat: e.latLng.lat(),
+        lng: e.latLng.lng(),
+        title: 'Lima',
+        click: function(e) {
+          alert('You clicked in this marker');
+        }
+      });
+      $('#lat').val(e.latLng.lat())
+      $('#long').val(e.latLng.lng())
+    }
+  });
+  map.addMarker({
+    lat: lat,
+    lng: lng,
+    title: 'Alexis'
+  });
 }

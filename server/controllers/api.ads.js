@@ -36,8 +36,8 @@ let addNewAd = (req, res) => {
       address: req.body.address,
       addressCountry: req.body.addressCountry,
       postalCode: req.body.postalCode,
-      long: 0,
-      lat: 0
+      long: req.body.long,
+      lat: req.body.lat
     }
   }, (err, new_ad) => {
     if(err) res.status(400).json({'error': `Error: ${err}`})

@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="./lib/bootstrap/dist/css/bootstrap.min.css">
-  <style>
-     #map {
-      height: 400px;
-      width: 100%;
-     }
+  <style type="text/css">
+    #map, #show_map {
+     height: 400px;
+     width: 100%;
+    }
   </style>
   <title>Online Selling House</title>
 </head>
@@ -182,7 +182,10 @@
                 <input type="text" class="form-control" id="postalCode" name="postalCode">
               </div>
               <div class="form-group">
+                <label for="map">Map: </label>
                 <div id="map" name="map"></div>
+                <input type="hidden" id="lat" name="lat" value="">
+                <input type="hidden" id="long" name="long" value="">
               </div>
               <button type="button" class="btn btn-success btn-lg" id="btn_add" data-dismiss="modal">Submit</button>
             </form>
@@ -219,6 +222,8 @@
             <span id="addressCountry"></span>
             <br>
             <span id="postalCode"></span>
+
+            <div id="show_map"></div>
           </div>
 
           <div class="modal-footer">
@@ -397,19 +402,7 @@
 </body>
   <script src="./lib/jquery/dist/jquery.min.js"></script>
   <script src="./lib/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFNWo6JPBKzjV1uX_yMxtFf7eFhD3f24Q"></script>
+  <script src="./script/gmaps.js"></script>
   <script src="./script/script.js"></script>
-  <script>
-  function initMap() {
-        var uluru = {lat: -25.363, lng: 131.044};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
-          center: uluru
-        });
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map
-        });
-      }
-  </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFNWo6JPBKzjV1uX_yMxtFf7eFhD3f24Q&callback=initMap" async defer></script>
 </html>
